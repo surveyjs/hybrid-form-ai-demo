@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import type { ProviderInfo, ProvidersResponse } from "@/types";
+import type { ProviderInfo } from "@/types";
+import { TEST_DATASETS } from "@/data/tests";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(): Promise<NextResponse<ProvidersResponse>> {
+export async function GET() {
   const providers: ProviderInfo[] = [];
 
   if (process.env.OPENAI_API_KEY) {
@@ -54,5 +55,7 @@ export async function GET(): Promise<NextResponse<ProvidersResponse>> {
     !!process.env.ANTHROPIC_API_KEY ||
     ollamaReachable;
 
-  return NextResponse.json({ providers, hasAvailable });
+  const testDatasets = TEST_DATASETS.map((d) => ({ id: d.id, text: d.text }));
+
+  return NextResponse.json({ providers, hasAvailable, testDatasets });
 }

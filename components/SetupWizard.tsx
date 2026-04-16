@@ -6,6 +6,11 @@ import { Survey } from "survey-react-ui";
 import "survey-core/defaultV2.min.css";
 import type { ProviderInfo, SetupData } from "@/types";
 
+interface TestDatasetChoice {
+  id: string;
+  text: string;
+}
+
 const PROVIDER_LABELS: Record<string, string> = {
   openai: "OpenAI",
   anthropic: "Anthropic",
@@ -14,11 +19,13 @@ const PROVIDER_LABELS: Record<string, string> = {
 
 interface SetupWizardProps {
   providers: ProviderInfo[];
+  testDatasets: TestDatasetChoice[];
   onComplete: (data: SetupData) => void;
 }
 
 export default function SetupWizard({
   providers,
+  testDatasets,
   onComplete,
 }: SetupWizardProps) {
   const onCompleteRef = useRef(onComplete);
@@ -34,8 +41,13 @@ export default function SetupWizard({
     const ollamaProvider = providers.find((p) => p.name === "ollama");
     const ollamaWarning = ollamaProvider?.warning;
 
+    const testDataChoices = [
+      { value: "custom", text: "Custom - I will provide my own images and JSON definition" },
+      ...testDatasets.map((d) => ({ value: d.id, text: d.text })),
+    ];
+
     const surveyJson = {
-      title: "Hybrid Form AI Demo – Test Paper Form Extraction",
+      title: "Hybrid Form AI Demo - Test Paper Form Extraction",
       description:
         "Configure your LLM provider, upload scanned form images, and provide a SurveyJS JSON definition to see intelligent extraction in action.",
       showProgressBar: "top",
@@ -77,7 +89,7 @@ export default function SetupWizard({
               name: "temperature",
               title: "Temperature",
               description:
-                "Controls randomness in the output (0–2). Lower values produce more deterministic results.",
+                "Controls randomness in the output (0-2). Lower values produce more deterministic results.",
               inputType: "number",
               defaultValue: 0.1,
               min: 0,
@@ -98,6 +110,22 @@ export default function SetupWizard({
           ],
         },
         {
+          name: "testData",
+          title: "Test Data",
+          elements: [
+            {
+              type: "radiogroup",
+              name: "testData",
+              title: "Select Test Data",
+              description:
+                "Choose a predefined test dataset or use your own custom images and form definition.",
+              isRequired: true,
+              defaultValue: "custom",
+              choices: testDataChoices,
+            },
+          ],
+        },
+        {
           name: "images",
           title: "Image Upload",
           elements: [
@@ -113,6 +141,7 @@ export default function SetupWizard({
               storeDataAsText: true,
               maxSize: 10485760,
               waitForUpload: true,
+              enableIf: "{testData} = 'custom'",
             },
           ],
         },
@@ -130,6 +159,7 @@ export default function SetupWizard({
               rows: 20,
               placeholder:
                 '{\n  "pages": [\n    {\n      "elements": [\n        {\n          "type": "text",\n          "name": "firstName",\n          "title": "First Name"\n        },\n        {\n          "type": "text",\n          "name": "lastName",\n          "title": "Last Name"\n        }\n      ]\n    }\n  ]\n}',
+              enableIf: "{testData} = 'custom'",
             },
           ],
         },
@@ -153,6 +183,23 @@ export default function SetupWizard({
         if (selected) {
           sender.setValue("model", selected.defaultModel);
         }
+      }
+
+      // Load test data when a predefined test is selected
+      if (options.name === "testData" && options.value !== "custom") {
+        fetch(`/api/test-data?id=${encodeURIComponent(options.value)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.images) {
+              sender.setValue("images", data.images);
+            }
+            if (data.surveyJson) {
+              sender.setValue("surveyJsonText", data.surveyJson);
+            }
+          })
+          .catch(() => {
+            // Silently fail — user can still provide data manually
+          });
       }
     });
 
@@ -186,7 +233,7 @@ export default function SetupWizard({
     });
 
     return model;
-  }, [providers]);
+  }, [providers, testDatasets]);
 
   return (
     <div className="max-w-4xl mx-auto py-8 px-4">
