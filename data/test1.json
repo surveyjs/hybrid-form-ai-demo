@@ -1,0 +1,123 @@
+{
+  "pages": [{
+    "name": "page1",
+    "title": "{patient}, {sex}\nAge: {age}, MRN: {MRN}",
+    "elements": [
+      {
+        "name": "patient",
+        "type": "text",
+        "title": "Patient Name"
+      },
+      {
+        "name": "MRN",
+        "type": "text",
+        "startWithNewLine": false
+      },
+      { 
+        "name": "sex", 
+       "type": "radiogroup", 
+       "title": "Sex",
+        "colCount": 0,
+        "choices": ["Male", "Female"] 
+      },
+      {
+        "name": "birthdate",
+        "type": "text",
+        "inputType": "date",
+        "title": "Born",
+        "startWithNewLine": false
+      },
+      {
+        "type": "multipletext",
+        "name": "synoptic-operative-report",
+        "title": "Synoptic Operative Report",
+        "items": [
+          { "name": "Report origin:" },
+          { "name": "Surgeon:" },
+          { "name": "Date of surgery:" }
+        ],
+        "colCount": 2
+      },
+      {
+        "type": "multipletext",
+        "name": "procedure-planned-and-performed",
+        "title": "Procedure Planned and Performed",
+        "items": [
+          { "name": "Disease site:" },
+          { "name": "Pre-operative diagnoses:" },
+          { "name": "Post-operative diagnoses:" },
+          { "name": "Procedure(s) performed:" },
+          { "name": "Surgical objectives:" }
+        ],
+        "colCount": 2
+      },
+      {
+        "type": "multipletext",
+        "name": "patient-information",
+        "title": "Patient Information",
+        "items": [
+          { "name": "Height:" },
+          { "name": "Height unit of measure:" },
+          { "name": "Weight:" },
+          { "name": "Weight unit of measure:" },
+          { "name": "BMI:" },
+          { "name": "BMI status:" },
+          { "name": "Current pregnancy:" }
+        ],
+        "colCount": 2
+      },
+      {
+        "type": "multipletext",
+        "name": "previous-related-surgery",
+        "title": "Previous Related Surgery",
+        "items": [
+          { "name": "Past breast history:" }
+        ]
+      },
+      {
+        "type": "multipletext",
+        "name": "clinical-findings",
+        "title": "Clinical Findings",
+        "items": [
+          { "name": "Eligible for genetics counseling:" },
+          { "name": "Gene status known:" },
+          { "name": "Method of initial direction:" },
+          { "name": "Tumour palpable on clinical exam:" },
+          { "name": "Diagnostic tools tumour can be seen on:" },
+          { "name": "How was diagnosis made:" },
+          { "name": "Estrogen receptor done:" },
+          { "name": "Estrogen receptor results:" },
+          { "name": "Progesterone receptors done:" },
+          { "name": "Progesterone receptors results:" },
+          { "name": "HER2 done:" },
+          { "name": "Distance from nipple:" },
+          { "name": "Specify distance (cm):" },
+          { "name": "Clock position:" },
+          { "name": "Pre-operative axillary node status:" },
+          { "name": "Axillary ultrasound performed:" },
+          { "name": "Other nodes at presentation:" }
+        ],
+        "colCount": 2
+      },
+      {
+        "type": "multipletext",
+        "name": "pre-operative-treatment",
+        "title": "Pre-operative Treatment",
+        "items": [
+          { "name": "Pre-operative treatment performed:" },
+          { "name": "Chemotherapy:" },
+          { "name": "Biologic (for example Herceptin):" },
+          { "name": "Radiotherapy:" },
+          { "name": "Hormonal:" },
+          { "name": "Clinical response:" }
+        ],
+        "colCount": 2
+      }
+    ]
+  }
+  ],
+  "calculatedValues": [
+    { "name": "age", "expression": "age({birthdate})"}
+  ],
+  "widthMode": "responsive"
+}
