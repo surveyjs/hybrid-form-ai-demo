@@ -51,15 +51,15 @@ Add a `radiogroup` question with the following behavior:
 
 3. **Wizard changes in `SetupWizard.tsx`:**
    - Insert the new "Test Data" page as page 2 (after Setup, before Image Upload).
-   - Use SurveyJS `readOnlyIf` property on the Image Upload and SurveyJS JSON Definition questions to handle read-only state declaratively:
-     - `"readOnlyIf": "{testData} <> 'custom'"` — the question becomes read-only whenever a predefined test is selected, and editable when "Custom" is selected.
+   - Use SurveyJS `enableIf` property on the Image Upload and SurveyJS JSON Definition questions to handle the enabled/disabled state declaratively:
+     - `"enableIf": "{testData} = 'custom'"` — the question is enabled only when "Custom" is selected, and disabled when a predefined test is selected.
    - On `onValueChanged` for the `testData` question:
      - If value is not `"custom"`: fetch `/api/test-data?id={value}`, then:
        - Set the file question value with the returned image data.
        - Set the comment question value with the returned JSON string.
-       - (Read-only state is handled automatically by `readOnlyIf`.)
+       - (Disabled state is handled automatically by `enableIf`.)
      - If value is `"custom"`:
-       - Do **not** clear/reset their current values — just let `readOnlyIf` make them editable again.
+       - Do **not** clear/reset their current values — just let `enableIf` make them editable again.
 
 4. **Create placeholder test data files:**
    - `data/test1.json` — a sample SurveyJS form definition for a synoptic operative report.

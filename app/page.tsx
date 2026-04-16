@@ -19,6 +19,7 @@ import ErrorView from "@/components/ErrorView";
 export default function Home() {
   const [appState, setAppState] = useState<AppState>("loading");
   const [providers, setProviders] = useState<ProviderInfo[]>([]);
+  const [testDatasets, setTestDatasets] = useState<{ id: string; text: string }[]>([]);
   const [result, setResult] = useState<ProcessResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [setupData, setSetupData] = useState<SetupData | null>(null);
@@ -32,6 +33,9 @@ export default function Home() {
         const res = await fetch("/api/providers");
         const data = await res.json();
         setProviders(data.providers);
+        if (data.testDatasets) {
+          setTestDatasets(data.testDatasets);
+        }
         setAppState(data.hasAvailable ? "setup" : "no-providers");
       } catch {
         setAppState("no-providers");
@@ -136,6 +140,7 @@ export default function Home() {
         <SetupWizard
           key={wizardKey}
           providers={providers}
+          testDatasets={testDatasets}
           onComplete={handleProcess}
         />
       )}
@@ -145,6 +150,7 @@ export default function Home() {
           <SetupWizard
             key={`post-${wizardKey}`}
             providers={providers}
+            testDatasets={testDatasets}
             onComplete={handleProcess}
           />
         )}
