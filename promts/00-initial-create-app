@@ -74,7 +74,7 @@ The app is a multi-step wizard:
   - On failure → switch to **Error** tab with clear error and retry option.
 
 - **Result Tab**: Nice metrics cards + pretty-printed JSON.
-- **SurveyJS Form Tab**: Render the original SurveyJS form pre-filled with the extracted data.
+- **SurveyJS Form Tab**: Render the original SurveyJS form pre-filled with the extracted data. The form must be **editable** (not read-only) so users can review and correct extracted values.
 
 **Additional Requirements:**
 - Clean, modern, responsive UI.

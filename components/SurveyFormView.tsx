@@ -16,7 +16,6 @@ export default function SurveyFormView({
 }: SurveyFormViewProps) {
   const survey = useMemo(() => {
     const model = new Model(surveyJson);
-    model.mode = "display";
     model.data = data;
     return model;
   }, [surveyJson, data]);
@@ -29,7 +28,7 @@ export default function SurveyFormView({
         </h3>
         <p className="text-sm text-gray-500 mt-1">
           This is your original form definition pre-filled with the extracted
-          data. Fields are read-only.
+          data. You can review and edit the values.
         </p>
       </div>
       <Survey model={survey} />
