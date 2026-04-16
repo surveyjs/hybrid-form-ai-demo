@@ -1,0 +1,93 @@
+You are an expert Next.js + TypeScript + SurveyJS developer.
+
+Create a complete, production-ready interactive demo for the published npm package `hybrid-form-ai`.
+
+**Important Technical Constraints:**
+- `hybrid-form-ai` is a **Node.js-only** package and must be used only on the server.
+- All calls to `createExtractor` and `extractFromImage` must happen in a Next.js API route.
+- LLM API keys are read from server environment variables (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`). The package does **not** accept keys as parameters.
+- Ollama requires no API key but needs the Ollama server to be running locally.
+
+**Project Type:** Next.js 15+ (App Router), TypeScript, Tailwind CSS.
+
+**Startup Behavior (Very Important):**
+
+On app load, the server must determine which LLM providers are available:
+- Check `OPENAI_API_KEY` and `ANTHROPIC_API_KEY`.
+- For **Ollama**: Perform a lightweight health check by calling `http://localhost:11434/api/tags` (or the configured `OLLAMA_BASE_URL`).
+  - If reachable → show Ollama as available.
+  - If not reachable → still show Ollama but with a clear warning ("Ollama server not detected. Run `ollama serve`").
+
+**Two main app states:**
+
+**State 1: No providers available**
+- Show a clean full-screen message with:
+  - Title: "No LLM Providers Configured"
+  - Clear explanation that at least one LLM provider must be set up.
+  - Detailed instructions on how to configure keys in `.env.local`.
+  - Example `.env.local` content for OpenAI and Anthropic.
+  - Instructions for Ollama (install + `ollama serve` + pull a vision model).
+  - Link to the main `hybrid-form-ai` repository.
+- Do **not** render the wizard or SurveyJS form.
+
+**State 2: At least one provider available**
+- Render the interactive demo.
+- In the Setup SurveyJS form, the provider dropdown should **only show available providers**.
+- For Ollama, if the health check failed, show it with a warning note in the question description.
+
+**Core Functionality (when providers are available):**
+
+The app is a multi-step wizard:
+
+1. **Setup Page (initial state)**
+   - SurveyJS form containing:
+     - Dropdown: Choose LLM Provider (only available ones)
+     - Text input: Model name (with sensible defaults based on provider: gpt-4o, claude-4-sonnet, llama-3.2-vision, etc.)
+     - Info text (not a field): "API Key is configured securely on the server"
+     - Optional fields: temperature, max tokens, etc.
+   - Each question must have a clear, helpful description.
+   - Survey title: "Hybrid Form AI Demo – Test Paper Form Extraction"
+   - Survey description: "Configure your LLM provider, upload scanned form images, and provide a SurveyJS JSON definition to see intelligent extraction in action."
+
+2. **Image Upload Page (second page)**
+   - Drag & drop + file input supporting multiple scanned/photographed images.
+   - Show thumbnails with remove buttons.
+
+3. **SurveyJS JSON Definition Page (third page)**
+   - Large textarea for pasting a valid SurveyJS JSON form definition.
+   - Real-time JSON validation with helpful placeholder text.
+
+**UI Behavior & States:**
+
+- Top navigation menu with tabs: **Setup | Result | SurveyJS Form**
+  - Initially (Setup state): Navigation is **hidden**.
+  - During **Processing**: Navigation is **hidden**. Show a large centered loading spinner with "Processing with [Model]..."
+  - On **Error**: Show navigation with **Setup** and **Error** tabs. Allow switching.
+  - On **Success**: Show navigation with **Setup**, **Result**, and **SurveyJS Form** tabs.
+
+- When the form is complete (valid provider + ≥1 image + valid SurveyJS JSON), change the final SurveyJS button text from "Complete" to **"Process with AI"**.
+
+- On clicking "Process with AI":
+  - Hide the form and show full-screen processing indicator.
+  - Send data to `/api/process` (provider, model, images as FormData, SurveyJS JSON).
+  - On success → switch to **Result** tab showing extracted JSON, confidence score, low-confidence fields, processing time, etc.
+  - On failure → switch to **Error** tab with clear error and retry option.
+
+- **Result Tab**: Nice metrics cards + pretty-printed JSON.
+- **SurveyJS Form Tab**: Render the original SurveyJS form pre-filled with the extracted data.
+
+**Additional Requirements:**
+- Clean, modern, responsive UI.
+- Good loading states and user-friendly error messages.
+- "Reset" button to return to initial setup.
+- Include a comprehensive `README.md` with setup instructions, especially environment variables and Ollama setup.
+
+Please generate the full project structure with all necessary files, including:
+- `app/page.tsx`
+- API route: `app/api/process/route.ts`
+- A helper route or logic for checking available providers
+- Components, types, and utilities
+- `package.json` with all dependencies
+- `.env.example`
+
+Start by creating the complete Next.js project code.
