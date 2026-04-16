@@ -9,8 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.1",
     "hybrid-form-ai": "^0.1.0",
     "next": "^15.1.0",
+    "ollama-ai-provider": "^1.2.0",
+    "openai": "^4.104.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "survey-core": "^1.12.1",

@@ -87,7 +87,7 @@ Please generate the full project structure with all necessary files, including:
 - API route: `app/api/process/route.ts`
 - A helper route or logic for checking available providers
 - Components, types, and utilities
-- `package.json` with all dependencies
+- `package.json` with all dependencies (must include `openai`, `@anthropic-ai/sdk`, and `ollama-ai-provider` as direct dependencies alongside `hybrid-form-ai`)
 - `.env.example`
 
 Start by creating the complete Next.js project code.
