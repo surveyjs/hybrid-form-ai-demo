@@ -1,0 +1,166 @@
+{
+  "title": "REAL ESTATE BUYER INTAKE FORM",
+  "description": "Disclaimer: Thank you for your interest in being a client. Information collected about new clients is confidential and will be treated accordingly.",
+  "pages": [
+    {
+      "name": "client_information",
+      "questionTitleLocation": "left",
+      "elements": [
+        {
+          "type": "text",
+          "name": "client_name",
+          "title": "Client Name"
+        },
+        {
+          "type": "text",
+          "name": "additional_client_name",
+          "startWithNewLine": false,
+          "title": "Additional Client Name"
+        },
+        {
+          "type": "text",
+          "name": "street_address",
+          "title": "Street Address"
+        },
+        {
+          "type": "text",
+          "name": "city",
+          "title": "City"
+        },
+        {
+          "type": "text",
+          "name": "state",
+          "startWithNewLine": false,
+          "title": "State"
+        },
+        {
+          "type": "text",
+          "name": "zip_code",
+          "title": "Zip Code",
+          "inputType": "number"
+        },
+        {
+          "type": "text",
+          "name": "email",
+          "title": "E-Mail",
+          "inputType": "email"
+        },
+        {
+          "type": "text",
+          "name": "phone",
+          "startWithNewLine": false,
+          "title": "Phone"
+        },
+        {
+          "type": "checkbox",
+          "name": "preferred_contact_method",
+          "title": "Preferred Contact Method",
+          "choices": [
+            {
+              "value": "call",
+              "text": "Call"
+            },
+            {
+              "value": "text",
+              "text": "Text"
+            },
+            {
+              "value": "email",
+              "text": "E-mail"
+            },
+            {
+              "value": "no_preference",
+              "text": "No Preference"
+            }
+          ],
+          "colCount": 4
+        },
+        {
+          "type": "comment",
+          "name": "reason_for_buying",
+          "title": "Reason for buying"
+        },
+        {
+          "type": "text",
+          "name": "how_soon_purchase",
+          "title": "How soon would you like to purchase?"
+        },
+        {
+          "type": "boolean",
+          "name": "first_time_buyer",
+          "title": "First-time buyer"
+        },
+        {
+          "type": "boolean",
+          "name": "property_to_sell",
+          "startWithNewLine": false,
+          "title": "Do you have a property to sell?"
+        },
+        {
+          "type": "boolean",
+          "name": "pre_approved",
+          "title": "Have you been pre-approved?"
+        },
+        {
+          "type": "text",
+          "name": "lender_name",
+          "visibleIf": "{pre_approved} = 'yes'",
+          "title": "Lender name"
+        },
+        {
+          "type": "text",
+          "name": "pre_approval_amount",
+          "visibleIf": "{pre_approved} = 'yes'",
+          "title": "Pre-approval amount"
+        },
+        {
+          "type": "text",
+          "name": "price_range",
+          "title": "What is your price range?"
+        },
+        {
+          "type": "comment",
+          "name": "additional_information",
+          "title": "Additional Information",
+          "titleLocation": "top",
+          "description": "Property type, size, location, special requirements, etc."
+        },
+        {
+          "type": "signaturepad",
+          "name": "client_signature",
+          "title": "Client Signature"
+        },
+        {
+          "type": "text",
+          "name": "client_signature_date",
+          "startWithNewLine": false,
+          "title": "Date",
+          "inputType": "date"
+        },
+        {
+          "type": "text",
+          "name": "client_print_name",
+          "title": "Print Name"
+        },
+        {
+          "type": "signaturepad",
+          "name": "additional_client_signature",
+          "title": "Additional Client Signature"
+        },
+        {
+          "type": "text",
+          "name": "additional_client_signature_date",
+          "startWithNewLine": false,
+          "title": "Date",
+          "inputType": "date"
+        },
+        {
+          "type": "text",
+          "name": "additional_client_print_name",
+          "title": "Print Name"
+        }
+      ]
+    }
+  ],
+  "widthMode": "responsive"
+}
