@@ -1,10 +1,10 @@
 # Hybrid Form AI Demo
 
-Interactive demo for the [`hybrid-form-ai`](https://github.com/surveyjs/hybrid-form-ai) npm package — extract structured data from scanned/photographed paper forms using multimodal LLMs.
+Interactive demo for the [`hybrid-form-ai`](https://github.com/surveyjs/hybrid-form-ai) npm package — extract structured data from scanned/photographed paper forms and digital PDFs using multimodal LLMs.
 
 ## Features
 
-- **Multi-step wizard** — configure provider, upload images, paste a SurveyJS form definition
+- **Multi-step wizard** — configure provider, upload images/PDFs, paste a SurveyJS form definition
 - **Built-in sample data** — predefined test datasets with scanned form images and SurveyJS definitions
 - **Multi-provider support** — OpenAI, Anthropic, and Ollama (local)
 - **Real-time validation** — JSON syntax checking, provider availability detection
@@ -64,10 +64,15 @@ Open [http://localhost:3000](http://localhost:3000).
 
 1. **Setup** — Pick a provider and model. API keys are read from server environment variables and never exposed to the browser.
 2. **Test Data** — Choose a built-in sample dataset or provide your own images and form definition.
-3. **Upload** — Drag & drop scanned form images (PNG, JPG, TIFF, etc.), or use the pre-loaded test image.
+3. **Upload** — Drag & drop scanned form images or digital PDFs (PNG, JPG, TIFF, PDF, etc.), or use pre-loaded test files.
 4. **Define** — Paste the SurveyJS JSON definition that describes your form fields, or use the pre-loaded test definition.
 5. **Process** — The server calls `hybrid-form-ai` to extract structured data from the images.
 6. **Review** — See extraction results with confidence scores and a pre-filled SurveyJS form.
+
+### Digital PDF Note
+
+Digital PDF processing requires the optional `sharp` dependency used by `hybrid-form-ai` for PDF-to-image conversion.
+If you see an error about `Digital PDF inputs require the optional "sharp" dependency to be installed`, install `sharp` in the runtime environment where this app executes.
 
 ## Project Structure
 

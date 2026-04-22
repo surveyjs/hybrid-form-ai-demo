@@ -42,14 +42,14 @@ export default function SetupWizard({
     const ollamaWarning = ollamaProvider?.warning;
 
     const testDataChoices = [
-      { value: "custom", text: "Custom - I will provide my own images and JSON definition" },
+      { value: "custom", text: "Custom - I will provide my own images/PDFs and JSON definition" },
       ...testDatasets.map((d) => ({ value: d.id, text: d.text })),
     ];
 
     const surveyJson = {
       title: "Hybrid Form AI Demo - Test Paper Form Extraction",
       description:
-        "Configure your LLM provider, upload scanned form images, and provide a SurveyJS JSON definition to see intelligent extraction in action.",
+        "Configure your LLM provider, upload scanned images or digital PDFs, and provide a SurveyJS JSON definition to see intelligent extraction in action.",
       showProgressBar: "top",
       progressBarType: "pages",
       completeText: "Process with AI",
@@ -117,7 +117,7 @@ export default function SetupWizard({
               name: "testData",
               title: "Select Test Data",
               description:
-                "Choose a predefined test dataset or use your own custom images and form definition.",
+                "Choose a predefined test dataset or use your own custom images/PDFs and form definition.",
               isRequired: true,
               defaultValue: "custom",
               choices: testDataChoices,
@@ -126,15 +126,15 @@ export default function SetupWizard({
         },
         {
           name: "images",
-          title: "Image Upload",
+          title: "Image/PDF Upload",
           elements: [
             {
               type: "file",
               name: "images",
-              title: "Upload Scanned Form Images",
+              title: "Upload Scanned Form Images or Digital PDFs",
               description:
-                "Drag & drop or click to upload scanned/photographed form images. Supports PNG, JPG, TIFF, and other image formats.",
-              acceptedTypes: "image/*",
+                "Drag & drop or click to upload scanned/photographed forms or digital PDFs. Supports PNG, JPG, TIFF, PDF, and other common formats.",
+              acceptedTypes: "image/*,.pdf,application/pdf",
               allowMultiple: true,
               isRequired: true,
               storeDataAsText: true,
@@ -153,7 +153,7 @@ export default function SetupWizard({
               name: "surveyJsonText",
               title: "SurveyJS JSON Definition",
               description:
-                "Paste a valid SurveyJS JSON form definition. This defines the fields that should be extracted from the scanned images.",
+                "Paste a valid SurveyJS JSON form definition. This defines the fields that should be extracted from uploaded images/PDFs.",
               isRequired: true,
               rows: 20,
               placeholder:

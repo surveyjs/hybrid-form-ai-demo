@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     const imageFiles = formData.getAll("images") as File[];
     if (imageFiles.length === 0) {
       return NextResponse.json(
-        { error: "At least one image is required" },
+        { error: "At least one image or PDF is required" },
         { status: 400 }
       );
     }
@@ -139,6 +139,11 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "An unexpected error occurred";
-    return NextResponse.json({ error: message }, { status: 500 });
+
+    const userMessage =
+      message.includes('Digital PDF inputs require the optional "sharp" dependency to be installed')
+        ? 'Digital PDF inputs require the optional "sharp" dependency. Install it in the app runtime environment and retry, or upload image files instead.'
+        : message;
+    return NextResponse.json({ error: userMessage }, { status: 500 });
   }
 }

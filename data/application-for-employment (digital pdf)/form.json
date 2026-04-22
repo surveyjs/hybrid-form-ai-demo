@@ -1,0 +1,310 @@
+{
+  "title": "Standard Application for Employment",
+  "description": "Please carefully read and answer all questions. You will not be considered for employment if you fail to completely answer all the questions on this application.",
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        {
+          "type": "text",
+          "name": "employer",
+          "title": "Employer"
+        },
+        {
+          "type": "dropdown",
+          "name": "position",
+          "startWithNewLine": false,
+          "title": "Position applying for",
+          "choices": [
+            "Software Engineer",
+            "Frontend Developer",
+            "Backend Developer",
+            "UI/UX Designer",
+            "Project Manager"
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "personal_data",
+          "title": "Personal Data",
+          "elements": [
+            {
+              "type": "text",
+              "name": "name",
+              "title": "Name (last, first, middle)"
+            },
+            {
+              "type": "text",
+              "name": "address",
+              "title": "Street Address and/or Mailing Address"
+            },
+            {
+              "type": "text",
+              "name": "city",
+              "title": "City"
+            },
+            {
+              "type": "text",
+              "name": "state",
+              "startWithNewLine": false,
+              "title": "State"
+            },
+            {
+              "type": "text",
+              "name": "zip",
+              "startWithNewLine": false,
+              "title": "Zip"
+            },
+            {
+              "type": "text",
+              "name": "home_phone",
+              "title": "Home Telephone Number"
+            },
+            {
+              "type": "text",
+              "name": "business_phone",
+              "startWithNewLine": false,
+              "title": "Business Telephone Number"
+            },
+            {
+              "type": "text",
+              "name": "cell_phone",
+              "startWithNewLine": false,
+              "title": "Cellular Telephone Number"
+            },
+            {
+              "type": "text",
+              "name": "start_date",
+              "title": "Date you can start work",
+              "inputType": "date",
+              "minValueExpression": "today()"
+            },
+            {
+              "type": "text",
+              "name": "salary_desired",
+              "startWithNewLine": false,
+              "title": "Salary Desired"
+            },
+            {
+              "type": "boolean",
+              "name": "high_school_diploma",
+              "title": "Do you have a High School Diploma or GED?",
+              "valueTrue": "Yes",
+              "valueFalse": "No"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "position_information",
+          "title": "Position Information",
+          "description": "Check all that you are willing to work.",
+          "elements": [
+            {
+              "type": "checkbox",
+              "name": "work_hours",
+              "title": "Hours",
+              "choices": [
+                "Full Time",
+                "Part Time",
+                "Days",
+                "Evenings",
+                "Swing",
+                "Graveyard",
+                "Weekends"
+              ],
+              "colCount": 2
+            },
+            {
+              "type": "radiogroup",
+              "name": "employment_status",
+              "title": "Status",
+              "choices": [
+                "Regular",
+                "Temporary"
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "name": "authorized_to_work",
+              "title": "Are you authorized to work in the U.S. on an unrestricted basis?",
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "name": "convicted_felony",
+              "title": "Have you ever been convicted of a felony?",
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "type": "comment",
+              "name": "felony_explanation",
+              "visibleIf": "{convicted_felony} = 'Yes'",
+              "startWithNewLine": false,
+              "title": "If yes, explain:"
+            },
+            {
+              "type": "radiogroup",
+              "name": "informed_of_functions",
+              "title": "Have you been told the essential functions of the job or have you been viewed a copy of the job description listing the essential functions of the job?",
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "name": "perform_functions",
+              "title": "Can you perform these essential functions of the job with or without reasonable accommodation?",
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "matrixdynamic",
+          "name": "qualifications",
+          "title": "Qualifications",
+          "description": "Please list any education or training you feel relates to the position applied for that would help you perform the work, such as schools, colleges, degrees, vocational or technical programs, and military training.",
+          "columns": [
+            {
+              "name": "school_name",
+              "title": "School Name",
+              "cellType": "text"
+            },
+            {
+              "name": "degree",
+              "title": "Degree",
+              "cellType": "text"
+            },
+            {
+              "name": "school_address",
+              "title": "Address/City/State",
+              "cellType": "text"
+            }
+          ],
+          "allowAddRows": false,
+          "allowRemoveRows": false,
+          "rowCount": 3
+        },
+        {
+          "type": "comment",
+          "name": "skills",
+          "title": "Special skills",
+          "description": "List any special skills or experience that you feel would help you in the position that you are applying for (leadership, organizations/teams, etc.)"
+        },
+        {
+          "type": "matrixdynamic",
+          "name": "references",
+          "title": "References",
+          "description": "Please list three professional references not related to you, with full name, address, phone number, and relationship. If you don’t have three professional references, then list personal, unrelated references.",
+          "columns": [
+            {
+              "name": "ref_name",
+              "title": "Name",
+              "cellType": "text"
+            },
+            {
+              "name": "ref_address",
+              "title": "Address/City/State",
+              "cellType": "text"
+            },
+            {
+              "name": "ref_phone",
+              "title": "Phone",
+              "cellType": "text"
+            },
+            {
+              "name": "ref_relationship",
+              "title": "Relationship",
+              "cellType": "text"
+            }
+          ],
+          "allowAddRows": false,
+          "allowRemoveRows": false,
+          "rowCount": 3
+        },
+        {
+          "type": "paneldynamic",
+          "name": "work_history",
+          "title": "Work history",
+          "description": "Start with your present or most recent employment and work back. (INCLUDE PAID AND UNPAID POSITIONS)",
+          "templateElements": [
+            {
+              "type": "text",
+              "name": "job_title",
+              "title": "Job Title"
+            },
+            {
+              "type": "text",
+              "name": "work_start_date",
+              "title": "Start Date",
+              "inputType": "date"
+            },
+            {
+              "type": "text",
+              "name": "work_end_date",
+              "startWithNewLine": false,
+              "title": "End Date",
+              "inputType": "date"
+            },
+            {
+              "type": "text",
+              "name": "company_name",
+              "title": "Company Name"
+            },
+            {
+              "type": "text",
+              "name": "supervisors_name",
+              "startWithNewLine": false,
+              "title": "Supervisor's Name "
+            },
+            {
+              "type": "text",
+              "name": "work_phone",
+              "title": "Phone Number",
+              "inputType": "tel"
+            },
+            {
+              "type": "text",
+              "name": "work_city",
+              "title": "City, State"
+            },
+            {
+              "type": "comment",
+              "name": "work_duties",
+              "title": "Duties: "
+            }
+          ],
+          "panelCount": 1,
+          "maxPanelCount": 4,
+          "confirmDelete": true
+        },
+        {
+          "type": "boolean",
+          "name": "work_contact_present_employer",
+          "title": "May we contact your present employer?",
+          "valueTrue": "Yes",
+          "valueFalse": "No"
+        },
+        {
+          "type": "text",
+          "name": "date",
+          "title": "Date",
+          "defaultValueExpression": "today()",
+          "inputType": "date",
+          "maxValueExpression": "today()"
+        }
+      ]
+    }
+  ],
+  "headerView": "advanced"
+}
