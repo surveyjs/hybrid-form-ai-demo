@@ -1,0 +1,51 @@
+{
+  "title": "Consent Form for Processing Personal Data",
+  "pages": [
+    {
+      "name": "page1",
+      "elements": [
+        {
+          "type": "html",
+          "name": "information",
+          "html": "<p>During the event you may be photographed or filmed. By giving your consent in writing or orally, [YOUR COMPANY NAME] may use such material in communications intended for the public. You may withdraw consent at any time by informing the organisers. In addition to personal data processed for event participation, you can provide consent for one or more specific personal data processing activities below.</p>"
+        },
+        {
+          "type": "checkbox",
+          "name": "consent-options",
+          "titleLocation": "hidden",
+          "choices": [
+            {
+              "value": "media-consent",
+              "text": "I consent that video(s) and/or photo(s) are taken of me during the event/meeting and used in communications activities."
+            },
+            {
+              "value": "contact-consent",
+              "text": "I consent that my name and contact details may be published in the list of participants of the event/meeting."
+            }
+          ]
+        },
+        {
+          "type": "multipletext",
+          "name": "participant-details",
+          "title": "Participant Details",
+          "items": [
+            { "name": "full-name", "title": "Full Name" },
+            { "name": "department", "title": "Department (if applicable)" },
+            { "name": "date", "title": "Date", "inputType": "date" }
+          ],
+          "itemTitleWidth": "90px"
+        },
+        {
+          "type": "signaturepad",
+          "name": "signature",
+          "startWithNewLine": false,
+          "title": "Signature",
+          "isRequired": true,
+          "signatureHeight": 150,
+          "penColor": "#4C6489"
+        }
+      ]
+    }
+  ],
+  "headerView": "advanced"
+}

@@ -16,6 +16,24 @@ export default function ResultView({ result, surveyModel, surveyDataVersion }: R
   const [activeDataTab, setActiveDataTab] = useState<DataTab>("response");
   // surveyDataVersion is used to trigger re-render when survey data changes
   void surveyDataVersion;
+
+  const signatureWarnings = Object.entries(result.data).filter(([field, value]) => {
+    if (!/signature/i.test(field)) {
+      return false;
+    }
+
+    if (typeof value !== "string") {
+      return true;
+    }
+
+    const normalized = value.trim().toLowerCase();
+    return (
+      normalized.length === 0 ||
+      normalized.includes("base64-encoded-signature-image-string") ||
+      normalized.includes("<base64")
+    );
+  });
+
   const confidenceColor =
     result.overallConfidence >= 0.85
       ? "text-green-600 bg-green-50 border-green-200"
@@ -90,6 +108,29 @@ export default function ResultView({ result, surveyModel, surveyDataVersion }: R
                 className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded"
               >
                 {field} ({((result.confidence[field] || 0) * 100).toFixed(0)}%)
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Signature Extraction Warning */}
+      {signatureWarnings.length > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <h3 className="text-sm font-semibold text-amber-800 mb-2">
+            Signature Could Not Be Reliably Extracted
+          </h3>
+          <p className="text-sm text-amber-700">
+            One or more signature fields are empty or placeholder-like in the extracted JSON.
+            The raw extractor output is shown as-is, so review these fields manually in the SurveyJS Form tab.
+          </p>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {signatureWarnings.map(([field]) => (
+              <span
+                key={field}
+                className="px-2 py-1 bg-amber-100 text-amber-900 text-xs font-medium rounded"
+              >
+                {field}
               </span>
             ))}
           </div>
