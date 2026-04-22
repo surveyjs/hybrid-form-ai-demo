@@ -1,0 +1,311 @@
+{
+  "pages": [
+    {
+      "name": "jobApplication",
+      "title": "Job Application Form",
+      "description": "Please complete the following job application form to be considered for employment.",
+      "elements": [
+        {
+          "type": "panel",
+          "name": "personalInformation",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "Personal Information",
+          "elements": [
+            {
+              "type": "text",
+              "name": "fullName",
+              "title": "Full Name",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "address",
+              "title": "Address",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "phoneNumber",
+              "title": "Phone Number",
+              "isRequired": true,
+              "inputType": "tel"
+            },
+            {
+              "type": "text",
+              "name": "emailAddress",
+              "title": "E-mail Address",
+              "isRequired": true,
+              "inputType": "email"
+            },
+            {
+              "type": "text",
+              "name": "dateOfBirth",
+              "title": "Date of Birth",
+              "isRequired": true,
+              "inputType": "date"
+            },
+            {
+              "type": "text",
+              "name": "ssn",
+              "title": "Social Security Number",
+              "isRequired": true
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "employmentInformation",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "Employment Information",
+          "elements": [
+            {
+              "type": "text",
+              "name": "desiredJobTitle",
+              "title": "Desired Job Title",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "desiredSalary",
+              "title": "Desired Salary",
+              "isRequired": true
+            },
+            {
+              "type": "dropdown",
+              "name": "availability",
+              "title": "Availability",
+              "isRequired": true,
+              "choices": [
+                "Full-time",
+                "Part-time"
+              ],
+              "showOtherItem": true
+            },
+            {
+              "type": "radiogroup",
+              "name": "willingToRelocate",
+              "title": "Willingness to Relocate",
+              "isRequired": true,
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "name": "authorizedToWork",
+              "title": "Authorized to Work in Country",
+              "isRequired": true,
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            },
+            {
+              "type": "radiogroup",
+              "name": "previousEmployment",
+              "title": "Previous Employment with Company",
+              "isRequired": true,
+              "choices": [
+                "Yes",
+                "No"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "educationWorkExperience",
+      "title": "Education & Work Experience",
+      "elements": [
+        {
+          "type": "panel",
+          "name": "education",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "Education",
+          "elements": [
+            {
+              "type": "dropdown",
+              "name": "highestEducation",
+              "title": "Highest Level of Education Completed",
+              "isRequired": true,
+              "choices": [
+                "High School",
+                "Associate's Degree",
+                "Bachelor's Degree",
+                "Master's Degree",
+                "Doctorate",
+                "Other"
+              ]
+            },
+            {
+              "type": "text",
+              "name": "institutionName",
+              "title": "Name of Institution",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "datesAttended",
+              "title": "Dates Attended",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "degreeEarned",
+              "title": "Degree or Certification Earned",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "majorField",
+              "title": "Major or Field of Study"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "workExperience",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "Work Experience",
+          "elements": [
+            {
+              "type": "text",
+              "name": "employerName",
+              "title": "Name of Employer"
+            },
+            {
+              "type": "text",
+              "name": "employmentDates",
+              "title": "Dates of Employment"
+            },
+            {
+              "type": "text",
+              "name": "jobTitle",
+              "title": "Job Title",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "jobDuties",
+              "title": "Job Duties and Responsibilities",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "reasonForLeaving",
+              "title": "Reason for Leaving"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "references",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "References",
+          "elements": [
+            {
+              "type": "comment",
+              "name": "reference1",
+              "title": "Reference 1",
+              "description": "Name, Job Title, and Contact Information"
+            },
+            {
+              "type": "comment",
+              "name": "reference2",
+              "title": "Reference 2",
+              "description": "Name, Job Title, and Contact Information"
+            },
+            {
+              "type": "comment",
+              "name": "reference3",
+              "title": "Reference 3",
+              "description": "Name, Job Title, and Contact Information",
+              "isRequired": true
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "skillsAndQualifications",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "Skills and Qualifications",
+          "elements": [
+            {
+              "type": "comment",
+              "name": "technicalSkills",
+              "title": "Technical Skills"
+            },
+            {
+              "type": "comment",
+              "name": "languageSkills",
+              "title": "Language Skills"
+            },
+            {
+              "type": "comment",
+              "name": "interpersonalSkills",
+              "title": "Interpersonal Skills"
+            },
+            {
+              "type": "comment",
+              "name": "certificationsAndLicenses",
+              "title": "Certifications and Licenses"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "panel1",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "Additional Information",
+          "elements": [
+            {
+              "type": "comment",
+              "name": "question1",
+              "title": "How did you hear about this job opening?"
+            },
+            {
+              "type": "comment",
+              "name": "additionalInfo",
+              "title": "Additional Information"
+            },
+            {
+              "type": "text",
+              "name": "hasCrimeConviction",
+              "title": "Have you ever been convicted of a Crime?"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "panel2",
+          "questionTitleWidth": "200px",
+          "questionTitleLocation": "left",
+          "title": "Acknowledgement and Signature",
+          "elements": [
+            {
+              "type": "comment",
+              "name": "signature",
+              "title": "Applicant's Signature"
+            },
+            {
+              "type": "text",
+              "name": "dateOfSubmittion",
+              "title": "Date",
+              "inputType": "date"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "widthMode": "responsive"
+}
