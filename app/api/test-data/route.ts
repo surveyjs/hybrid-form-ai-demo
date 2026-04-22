@@ -3,6 +3,22 @@ import { readFileSync, readdirSync } from "fs";
 import path from "path";
 import { getTestDatasets } from "@/data/tests";
 
+const SUPPORTED_FILE_TYPES: Record<string, string> = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".gif": "image/gif",
+  ".webp": "image/webp",
+  ".bmp": "image/bmp",
+  ".tif": "image/tiff",
+  ".tiff": "image/tiff",
+  ".pdf": "application/pdf",
+};
+
+function isIncludedDatasetAsset(filename: string): boolean {
+  return /^[a-z0-9]/i.test(filename) && path.extname(filename).toLowerCase() in SUPPORTED_FILE_TYPES;
+}
+
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.searchParams.get("id");
 
@@ -22,12 +38,11 @@ export async function GET(request: NextRequest) {
     const files = readdirSync(datasetDir);
 
     const images = files
-      .filter((f) => f !== "form.json")
+      .filter(isIncludedDatasetAsset)
       .map((filename) => {
         const filePath = path.join(datasetDir, filename);
         const buffer = readFileSync(filePath);
-        const ext = path.extname(filename).toLowerCase().slice(1);
-        const mimeType = ext === "jpg" || ext === "jpeg" ? "image/jpeg" : `image/${ext}`;
+        const mimeType = SUPPORTED_FILE_TYPES[path.extname(filename).toLowerCase()];
         const base64 = buffer.toString("base64");
         return {
           name: filename,
