@@ -199,6 +199,5 @@
         { "type": "text", "name": "date", "title": "Date", "defaultValue": "February 8, 2014" }
       ]
     }
-  ],
-  "showQuestionNumbers": "on"
+  ]
 }

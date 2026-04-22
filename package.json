@@ -16,8 +16,8 @@
     "openai": "^6.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "survey-core": "^1.12.1",
-    "survey-react-ui": "^1.12.1"
+    "survey-core": "latest",
+    "survey-react-ui": "latest"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

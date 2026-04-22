@@ -3,7 +3,7 @@
 import { useMemo, useRef } from "react";
 import { Model } from "survey-core";
 import { Survey } from "survey-react-ui";
-import "survey-core/defaultV2.min.css";
+import "survey-core/survey-core.min.css";
 import type { ProviderInfo, SetupData } from "@/types";
 
 interface TestDatasetChoice {
@@ -53,7 +53,6 @@ export default function SetupWizard({
       showProgressBar: "top",
       progressBarType: "pages",
       completeText: "Process with AI",
-      showQuestionNumbers: "off",
       pages: [
         {
           name: "setup",
