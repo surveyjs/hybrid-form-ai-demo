@@ -23,6 +23,7 @@ export default function Home() {
   const [testDatasets, setTestDatasets] = useState<{ id: string; text: string }[]>([]);
   const [result, setResult] = useState<ProcessResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [partialData, setPartialData] = useState<Record<string, unknown> | null>(null);
   const [setupData, setSetupData] = useState<SetupData | null>(null);
   const [activeTab, setActiveTab] = useState<TabName>("setup");
   const [processingModel, setProcessingModel] = useState("");
@@ -83,6 +84,7 @@ export default function Home() {
 
       if (!res.ok) {
         setError(responseData.error || "Processing failed");
+        setPartialData(responseData.partialData ?? null);
         setAppState("error");
         setActiveTab("error");
         return;
@@ -117,6 +119,7 @@ export default function Home() {
     setAppState("setup");
     setResult(null);
     setError(null);
+    setPartialData(null);
     setSetupData(null);
     setActiveTab("setup");
     setSurveyDataVersion(0);
@@ -181,7 +184,7 @@ export default function Home() {
         )}
 
       {appState === "error" && activeTab === "error" && (
-        <ErrorView error={error || "Unknown error"} onRetry={handleReset} />
+        <ErrorView error={error || "Unknown error"} partialData={partialData} onRetry={handleReset} />
       )}
     </main>
   );

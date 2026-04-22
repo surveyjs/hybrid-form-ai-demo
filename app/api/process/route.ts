@@ -74,31 +74,44 @@ export async function POST(request: NextRequest) {
     let allData: Record<string, unknown> = {};
     let allConfidence: Record<string, number> = {};
     let uniqueId: string | undefined;
+    let extractionError: string | undefined;
 
     for (const buffer of imageBuffers) {
-      const result = await extractor.extractFromImage({
-        image: buffer,
-        formDefinition: surveyJson,
-      });
+      try {
+        const result = await extractor.extractFromImage({
+          image: buffer,
+          formDefinition: surveyJson,
+        });
 
-      // result.confidence is FieldConfidence[] with { fieldName, confidence, flagged }
-      const confidenceMap: Record<string, number> = {};
-      for (const fc of result.confidence) {
-        confidenceMap[fc.fieldName] = fc.confidence;
-      }
-
-      for (const [key, value] of Object.entries(result.data || {})) {
-        const newConf = confidenceMap[key] || 0;
-        const existingConf = allConfidence[key] || 0;
-        if (newConf >= existingConf) {
-          allData[key] = value;
-          allConfidence[key] = newConf;
+        // result.confidence is FieldConfidence[] with { fieldName, confidence, flagged }
+        const confidenceMap: Record<string, number> = {};
+        for (const fc of result.confidence) {
+          confidenceMap[fc.fieldName] = fc.confidence;
         }
-      }
 
-      if (result.uniqueId && !uniqueId) {
-        uniqueId = result.uniqueId;
+        for (const [key, value] of Object.entries(result.data || {})) {
+          const newConf = confidenceMap[key] || 0;
+          const existingConf = allConfidence[key] || 0;
+          if (newConf >= existingConf) {
+            allData[key] = value;
+            allConfidence[key] = newConf;
+          }
+        }
+
+        if (result.uniqueId && !uniqueId) {
+          uniqueId = result.uniqueId;
+        }
+      } catch (err) {
+        extractionError = err instanceof Error ? err.message : "Extraction failed";
+        break;
       }
+    }
+
+    if (extractionError) {
+      return NextResponse.json(
+        { error: extractionError, partialData: allData },
+        { status: 500 }
+      );
     }
 
     const processingTime = Date.now() - startTime;
