@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.90.0",
-    "hybrid-form-ai": "latest",
+        "hybrid-form-ai": "file:C:\\survey.js\\Lib\\hybrid-form-ai\\dist",
     "next": "^15.1.0",
     "ollama-ai-provider": "^1.2.0",
     "openai": "^6.0.0",
