@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     let allData: Record<string, unknown> = {};
-    let allConfidence: Record<string, number> = {};
+    let allConfidence: Record<string, number | null> = {};
     let uniqueId: string | undefined;
     let extractionError: string | undefined;
 
@@ -83,16 +83,22 @@ export async function POST(request: NextRequest) {
           formDefinition: surveyJson,
         });
 
-        // result.confidence is FieldConfidence[] with { fieldName, confidence, flagged }
-        const confidenceMap: Record<string, number> = {};
+        // result.confidence is FieldConfidence[] with { fieldName, confidence, flagged }.
+        // confidence is `number | null`; null means "no signal" (e.g. the model
+        // confidently returned the field as empty without a numeric score).
+        const confidenceMap: Record<string, number | null> = {};
         for (const fc of result.confidence) {
           confidenceMap[fc.fieldName] = fc.confidence;
         }
 
         for (const [key, value] of Object.entries(result.data || {})) {
-          const newConf = confidenceMap[key] || 0;
-          const existingConf = allConfidence[key] || 0;
-          if (newConf >= existingConf) {
+          const newConf = confidenceMap[key] ?? null;
+          const existingConf = allConfidence[key] ?? null;
+          // A numeric confidence always wins over null; among numerics, higher wins.
+          // null is only kept when nothing better has been seen for this field.
+          const newScore = newConf ?? -1;
+          const existingScore = key in allConfidence ? existingConf ?? -1 : -Infinity;
+          if (newScore >= existingScore) {
             allData[key] = value;
             allConfidence[key] = newConf;
           }
@@ -116,14 +122,19 @@ export async function POST(request: NextRequest) {
 
     const processingTime = Date.now() - startTime;
 
-    const confidenceValues = Object.values(allConfidence);
+    // Only fields with a numeric confidence count toward the metric. Fields
+    // scored null (correctly-empty / no signal) are excluded so they don't
+    // drag the average down or get flagged as low-confidence.
+    const scoredValues = Object.values(allConfidence).filter(
+      (c): c is number => c !== null
+    );
     const overallConfidence =
-      confidenceValues.length > 0
-        ? confidenceValues.reduce((a, b) => a + b, 0) / confidenceValues.length
+      scoredValues.length > 0
+        ? scoredValues.reduce((a, b) => a + b, 0) / scoredValues.length
         : 0;
 
     const lowConfidenceFields = Object.entries(allConfidence)
-      .filter(([, score]) => score < 0.75)
+      .filter(([, score]) => score !== null && score < 0.75)
       .map(([field]) => field);
 
     return NextResponse.json({

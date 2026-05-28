@@ -145,11 +145,14 @@ export default function ResultView({ result, surveyModel, surveyDataVersion }: R
           </h3>
           <div className="space-y-3">
             {Object.entries(result.confidence)
-              .sort(([, a], [, b]) => b - a)
+              .sort(([, a], [, b]) => (b ?? -1) - (a ?? -1))
               .map(([field, score]) => {
-                const pct = score * 100;
-                const barColor =
-                  pct >= 85
+                // null = "no signal" (correctly-empty field); render as neutral.
+                const isUnscored = score === null;
+                const pct = isUnscored ? 0 : score * 100;
+                const barColor = isUnscored
+                  ? "bg-gray-300"
+                  : pct >= 85
                     ? "bg-green-500"
                     : pct >= 60
                       ? "bg-yellow-500"
@@ -166,7 +169,7 @@ export default function ResultView({ result, surveyModel, surveyDataVersion }: R
                       />
                     </div>
                     <span className="text-sm font-medium text-gray-500 w-12 text-right">
-                      {pct.toFixed(0)}%
+                      {isUnscored ? "—" : `${pct.toFixed(0)}%`}
                     </span>
                   </div>
                 );

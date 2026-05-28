@@ -1,0 +1,1518 @@
+{
+  "title": "Health Insurance Claim Form (CMS-1500)",
+  "description": "Health Insurance Claim Form CMS-1500 (02/12), maintained by the National Uniform Claim Committee (NUCC). Field titles use the exact wording printed on the paper form to maximize vision-LLM extraction accuracy.",
+  "logoPosition": "right",
+  "showQuestionNumbers": "off",
+  "showProgressBar": "top",
+  "progressBarType": "pages",
+  "showPreviewBeforeComplete": "showAllQuestions",
+  "previewText": "Preview claim",
+  "editText": "Edit claim",
+  "completeText": "Submit claim",
+  "pagePrevText": "Back",
+  "pageNextText": "Next",
+  "widthMode": "responsive",
+  "questionTitleLocation": "top",
+  "checkErrorsMode": "onValueChanged",
+  "pages": [
+    {
+      "name": "carrier_section",
+      "title": "CARRIER",
+      "description": "The insurance company the claim is being mailed to.",
+      "elements": [
+        {
+          "type": "text",
+          "name": "carrier_name",
+          "title": "Carrier Name",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "carrier_address",
+          "title": "Carrier Address"
+        },
+        {
+          "type": "text",
+          "name": "carrier_city_state_zip",
+          "title": "Carrier City, State, ZIP",
+          "placeholder": "CITY, ST 12345"
+        }
+      ]
+    },
+    {
+      "name": "box1_insurance_type",
+      "title": "1. Insurance Type and 1a. Insured's I.D. Number",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "insurance_type",
+          "aiHint": "Box 1 has 7 small checkboxes in one horizontal row. The X mark sits at the LEFT edge of a column; the column's label and placeholder text are IMMEDIATELY TO THE RIGHT of the X. To identify the marked column: find the X, then read the text directly to its right (label above, placeholder in parens below). Columns left-to-right: 1=MEDICARE (Medicare#), 2=MEDICAID (Medicaid#), 3=TRICARE (ID#/DoD#), 4=CHAMPVA (Member ID#), 5=GROUP HEALTH PLAN (ID#), 6=FECA BLK LUNG (ID#), 7=OTHER (ID#). Examples: if the text right of the X starts with 'GROUP' or its placeholder is the FIRST '(ID#)' from the left, return 'group'. If the text right of the X is 'CHAMPVA' or '(Member ID#)', return 'champva'. ABSOLUTE RULE: NEVER return 'other' when uncertain — 'other' is only valid when the X is in the far-right checkbox, with 'OTHER' label literally to its right. If you see an X but cannot pinpoint the column, return the column whose text starts immediately to the right of the X, even if approximate.",
+          "title": "1. MEDICARE / MEDICAID / TRICARE / CHAMPVA / GROUP HEALTH PLAN / FECA BLK LUNG / OTHER",
+          "choices": [
+            {
+              "value": "medicare",
+              "text": "Medicare"
+            },
+            {
+              "value": "medicaid",
+              "text": "Medicaid"
+            },
+            {
+              "value": "tricare",
+              "text": "TRICARE"
+            },
+            {
+              "value": "champva",
+              "text": "CHAMPVA"
+            },
+            {
+              "value": "group",
+              "text": "Group Health Plan"
+            },
+            {
+              "value": "feca",
+              "text": "FECA Black Lung"
+            },
+            {
+              "value": "other",
+              "text": "Other"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "insured_id",
+          "aiHint": "Box 1a. Capture the entire alphanumeric ID exactly as printed, including letters, hyphens, and internal spaces (e.g., 'BSH 4827193 02'). Do not strip whitespace or punctuation.",
+          "title": "1a. INSURED'S I.D. NUMBER",
+          "isRequired": true,
+          "description": "As it appears on the insurance card."
+        }
+      ]
+    },
+    {
+      "name": "box2_patient",
+      "title": "2, 3, 5. Patient Information",
+      "elements": [
+        {
+          "type": "panel",
+          "name": "box2_panel",
+          "title": "2. PATIENT'S NAME (Last Name, First Name, Middle Initial)",
+          "elements": [
+            {
+              "type": "text",
+              "name": "patient_last_name",
+              "title": "PATIENT'S NAME (Last Name)",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "patient_first_name",
+              "title": "PATIENT'S NAME (First Name)",
+              "isRequired": true,
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "patient_middle_init",
+              "title": "PATIENT'S NAME (Middle Initial)",
+              "maxLength": 1,
+              "startWithNewLine": false
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "box3_panel",
+          "title": "3. PATIENT'S BIRTH DATE / SEX",
+          "elements": [
+            {
+              "type": "text",
+              "name": "patient_dob",
+              "aiHint": "Box 3 left side. On the paper form, written as three small adjacent cells: MM | DD | YY (2-digit year). Convert to YYYY-MM-DD. For 2-digit birth-year disambiguation: 50-99 -> 19xx, 00-49 -> 20xx.",
+              "title": "PATIENT'S BIRTH DATE",
+              "inputType": "date",
+              "isRequired": true
+            },
+            {
+              "type": "radiogroup",
+              "name": "patient_sex",
+              "aiHint": "Box 3 right side (SEX). Two small checkboxes labeled M and F. The X sits immediately to the LEFT of the chosen letter. Return 'M' or 'F'.",
+              "title": "SEX",
+              "choices": [
+                {
+                  "value": "M",
+                  "text": "Male"
+                },
+                {
+                  "value": "F",
+                  "text": "Female"
+                }
+              ],
+              "colCount": 0,
+              "isRequired": true,
+              "startWithNewLine": false
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "box5_panel",
+          "title": "5. PATIENT'S ADDRESS (No., Street)",
+          "elements": [
+            {
+              "type": "text",
+              "name": "patient_street",
+              "title": "PATIENT'S ADDRESS (No., Street)",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "patient_city",
+              "title": "PATIENT'S ADDRESS \u2014 CITY",
+              "isRequired": true
+            },
+            {
+              "type": "dropdown",
+              "name": "patient_state",
+              "title": "PATIENT'S ADDRESS \u2014 STATE",
+              "choices": [
+                "AL",
+                "AK",
+                "AZ",
+                "AR",
+                "CA",
+                "CO",
+                "CT",
+                "DE",
+                "DC",
+                "FL",
+                "GA",
+                "HI",
+                "ID",
+                "IL",
+                "IN",
+                "IA",
+                "KS",
+                "KY",
+                "LA",
+                "ME",
+                "MD",
+                "MA",
+                "MI",
+                "MN",
+                "MS",
+                "MO",
+                "MT",
+                "NE",
+                "NV",
+                "NH",
+                "NJ",
+                "NM",
+                "NY",
+                "NC",
+                "ND",
+                "OH",
+                "OK",
+                "OR",
+                "PA",
+                "RI",
+                "SC",
+                "SD",
+                "TN",
+                "TX",
+                "UT",
+                "VT",
+                "VA",
+                "WA",
+                "WV",
+                "WI",
+                "WY",
+                "PR",
+                "VI",
+                "AS",
+                "GU",
+                "MP"
+              ],
+              "isRequired": true,
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "patient_zip",
+              "title": "PATIENT'S ADDRESS \u2014 ZIP CODE",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "99999"
+              },
+              "isRequired": true,
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "patient_phone",
+              "title": "PATIENT'S TELEPHONE (Include Area Code)",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "(999) 999-9999"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "box6_box4_box7",
+      "title": "6. Relationship; 4. Insured's Name; 7. Insured's Address",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "relationship_to_insured",
+          "aiHint": "Box 6. Four small checkboxes in one horizontal row: Self, Spouse, Child, Other. X sits immediately to the LEFT of the chosen label. Return: self, spouse, child, or other.",
+          "title": "6. PATIENT RELATIONSHIP TO INSURED",
+          "choices": [
+            {
+              "value": "self",
+              "text": "Self"
+            },
+            {
+              "value": "spouse",
+              "text": "Spouse"
+            },
+            {
+              "value": "child",
+              "text": "Child"
+            },
+            {
+              "value": "other",
+              "text": "Other"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true
+        },
+        {
+          "type": "html",
+          "name": "box6_help",
+          "html": "<p style='color:#555;'><em>If relationship is <b>Self</b>, the insured fields below mirror the patient's. If different, fill them out for the policyholder.</em></p>"
+        },
+        {
+          "type": "panel",
+          "name": "box4_panel",
+          "title": "4. INSURED'S NAME (Last Name, First Name, Middle Initial)",
+          "elements": [
+            {
+              "type": "text",
+              "name": "insured_last_name",
+              "title": "INSURED'S NAME (Last Name)",
+              "isRequired": true,
+              "defaultValueExpression": "{patient_last_name}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            },
+            {
+              "type": "text",
+              "name": "insured_first_name",
+              "title": "INSURED'S NAME (First Name)",
+              "isRequired": true,
+              "startWithNewLine": false,
+              "defaultValueExpression": "{patient_first_name}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            },
+            {
+              "type": "text",
+              "name": "insured_middle_init",
+              "title": "INSURED'S NAME (Middle Initial)",
+              "maxLength": 1,
+              "startWithNewLine": false,
+              "defaultValueExpression": "{patient_middle_init}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "box7_panel",
+          "title": "7. INSURED'S ADDRESS (No., Street)",
+          "elements": [
+            {
+              "type": "text",
+              "name": "insured_street",
+              "title": "INSURED'S ADDRESS (No., Street)",
+              "isRequired": true,
+              "defaultValueExpression": "{patient_street}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            },
+            {
+              "type": "text",
+              "name": "insured_city",
+              "title": "INSURED'S ADDRESS \u2014 CITY",
+              "isRequired": true,
+              "defaultValueExpression": "{patient_city}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            },
+            {
+              "type": "dropdown",
+              "name": "insured_state",
+              "title": "INSURED'S ADDRESS \u2014 STATE",
+              "choices": [
+                "AL",
+                "AK",
+                "AZ",
+                "AR",
+                "CA",
+                "CO",
+                "CT",
+                "DE",
+                "DC",
+                "FL",
+                "GA",
+                "HI",
+                "ID",
+                "IL",
+                "IN",
+                "IA",
+                "KS",
+                "KY",
+                "LA",
+                "ME",
+                "MD",
+                "MA",
+                "MI",
+                "MN",
+                "MS",
+                "MO",
+                "MT",
+                "NE",
+                "NV",
+                "NH",
+                "NJ",
+                "NM",
+                "NY",
+                "NC",
+                "ND",
+                "OH",
+                "OK",
+                "OR",
+                "PA",
+                "RI",
+                "SC",
+                "SD",
+                "TN",
+                "TX",
+                "UT",
+                "VT",
+                "VA",
+                "WA",
+                "WV",
+                "WI",
+                "WY",
+                "PR",
+                "VI",
+                "AS",
+                "GU",
+                "MP"
+              ],
+              "isRequired": true,
+              "startWithNewLine": false,
+              "defaultValueExpression": "{patient_state}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            },
+            {
+              "type": "text",
+              "name": "insured_zip",
+              "title": "INSURED'S ADDRESS \u2014 ZIP CODE",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "99999"
+              },
+              "isRequired": true,
+              "startWithNewLine": false,
+              "defaultValueExpression": "{patient_zip}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            },
+            {
+              "type": "text",
+              "name": "insured_phone",
+              "title": "INSURED'S TELEPHONE (Include Area Code)",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "(999) 999-9999"
+              },
+              "defaultValueExpression": "{patient_phone}",
+              "enableIf": "{relationship_to_insured} != 'self'"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "box11_policy",
+      "title": "11. Insured's Policy Group, DOB, Sex, Plan Name",
+      "elements": [
+        {
+          "type": "text",
+          "name": "policy_group_feca",
+          "title": "INSURED'S POLICY GROUP OR FECA NUMBER",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "insured_dob",
+          "aiHint": "Box 11a INSURED'S DATE OF BIRTH. Three small cells MM | DD | YY. Convert to YYYY-MM-DD. For 2-digit birth-year disambiguation: 50-99 -> 19xx, 00-49 -> 20xx. Often blank when the patient is the insured (relationship = self).",
+          "title": "INSURED'S DATE OF BIRTH",
+          "inputType": "date",
+          "defaultValueExpression": "{patient_dob}",
+          "enableIf": "{relationship_to_insured} != 'self'"
+        },
+        {
+          "type": "radiogroup",
+          "name": "insured_sex",
+          "aiHint": "Box 11a SEX (to the right of INSURED'S DATE OF BIRTH). Two checkboxes M and F. The X is to the LEFT of the chosen letter. Return 'M' or 'F'. Often blank when the patient is the insured.",
+          "title": "SEX",
+          "choices": [
+            {
+              "value": "M",
+              "text": "Male"
+            },
+            {
+              "value": "F",
+              "text": "Female"
+            }
+          ],
+          "colCount": 0,
+          "startWithNewLine": false,
+          "defaultValueExpression": "{patient_sex}",
+          "enableIf": "{relationship_to_insured} != 'self'"
+        },
+        {
+          "type": "text",
+          "name": "other_claim_id",
+          "title": "11b. OTHER CLAIM ID (Designated by NUCC)"
+        },
+        {
+          "type": "text",
+          "name": "plan_name",
+          "title": "11c. INSURANCE PLAN NAME OR PROGRAM NAME",
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "other_health_plan",
+          "aiHint": "Box 11d IS THERE ANOTHER HEALTH BENEFIT PLAN? Two small checkboxes YES and NO. X is immediately to the LEFT of the chosen one. Return 'Y' or 'N'.",
+          "title": "11d. IS THERE ANOTHER HEALTH BENEFIT PLAN?",
+          "choices": [
+            {
+              "value": "Y",
+              "text": "Yes"
+            },
+            {
+              "value": "N",
+              "text": "No"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true,
+          "description": "If YES, complete Box 9, 9a, and 9d below."
+        }
+      ]
+    },
+    {
+      "name": "box9_other_insured",
+      "title": "9. Other Insured's Name, Policy, and Plan",
+      "description": "Complete only if another health plan exists (Box 11d = Yes).",
+      "visibleIf": "{other_health_plan} = 'Y'",
+      "elements": [
+        {
+          "type": "panel",
+          "name": "box9_name_panel",
+          "title": "9. OTHER INSURED'S NAME (Last Name, First Name, Middle Initial)",
+          "elements": [
+            {
+              "type": "text",
+              "name": "other_insured_last_name",
+              "title": "OTHER INSURED'S NAME (Last Name)",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "other_insured_first_name",
+              "title": "OTHER INSURED'S NAME (First Name)",
+              "isRequired": true,
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "other_insured_middle_init",
+              "title": "OTHER INSURED'S NAME (Middle Initial)",
+              "maxLength": 1,
+              "startWithNewLine": false
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "name": "other_policy_or_group",
+          "title": "9a. OTHER INSURED'S POLICY OR GROUP NUMBER",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "other_plan_name",
+          "title": "9d. INSURANCE PLAN NAME OR PROGRAM NAME",
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "name": "box10_condition",
+      "title": "10. Is Patient's Condition Related To",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "employment",
+          "aiHint": "Box 10a EMPLOYMENT? Two small checkboxes YES and NO arranged horizontally. X is to the LEFT of the chosen one. Return 'Y' or 'N'.",
+          "title": "10a. EMPLOYMENT? (Current or Previous)",
+          "choices": [
+            {
+              "value": "Y",
+              "text": "Yes"
+            },
+            {
+              "value": "N",
+              "text": "No"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true
+        },
+        {
+          "type": "radiogroup",
+          "name": "auto_accident",
+          "aiHint": "Box 10b AUTO ACCIDENT? Two small checkboxes YES and NO. X is to the LEFT of the chosen one. Return 'Y' or 'N'. If YES, the field 'auto_accident_state' to the right holds the 2-letter state code where the accident occurred.",
+          "title": "10b. AUTO ACCIDENT?",
+          "choices": [
+            {
+              "value": "Y",
+              "text": "Yes"
+            },
+            {
+              "value": "N",
+              "text": "No"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true
+        },
+        {
+          "type": "dropdown",
+          "name": "auto_accident_state",
+          "title": "10b. PLACE (State)",
+          "choices": [
+            "AL",
+            "AK",
+            "AZ",
+            "AR",
+            "CA",
+            "CO",
+            "CT",
+            "DE",
+            "DC",
+            "FL",
+            "GA",
+            "HI",
+            "ID",
+            "IL",
+            "IN",
+            "IA",
+            "KS",
+            "KY",
+            "LA",
+            "ME",
+            "MD",
+            "MA",
+            "MI",
+            "MN",
+            "MS",
+            "MO",
+            "MT",
+            "NE",
+            "NV",
+            "NH",
+            "NJ",
+            "NM",
+            "NY",
+            "NC",
+            "ND",
+            "OH",
+            "OK",
+            "OR",
+            "PA",
+            "RI",
+            "SC",
+            "SD",
+            "TN",
+            "TX",
+            "UT",
+            "VT",
+            "VA",
+            "WA",
+            "WV",
+            "WI",
+            "WY",
+            "PR",
+            "VI",
+            "AS",
+            "GU",
+            "MP"
+          ],
+          "visibleIf": "{auto_accident} = 'Y'",
+          "isRequired": true,
+          "startWithNewLine": false
+        },
+        {
+          "type": "radiogroup",
+          "name": "other_accident",
+          "aiHint": "Box 10c OTHER ACCIDENT? Two small checkboxes YES and NO. X is to the LEFT of the chosen one. Return 'Y' or 'N'.",
+          "title": "10c. OTHER ACCIDENT?",
+          "choices": [
+            {
+              "value": "Y",
+              "text": "Yes"
+            },
+            {
+              "value": "N",
+              "text": "No"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true
+        }
+      ]
+    },
+    {
+      "name": "box12_box14_box15_box16_box18",
+      "title": "12, 13. Signatures \u00b7 14, 15. Dates \u00b7 16. Unable to Work \u00b7 18. Hospitalization",
+      "elements": [
+        {
+          "type": "text",
+          "name": "patient_signature",
+          "title": "12. PATIENT'S OR AUTHORIZED PERSON'S SIGNATURE",
+          "defaultValue": "SIGNATURE ON FILE"
+        },
+        {
+          "type": "text",
+          "name": "patient_signature_date",
+          "aiHint": "Box 12 DATE next to patient signature. Usually printed as MM/DD/YYYY. For 2-digit years, this is a recent signing date — assume 20xx. Return YYYY-MM-DD.",
+          "title": "12. DATE",
+          "inputType": "date",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "insured_signature",
+          "title": "13. INSURED'S OR AUTHORIZED PERSON'S SIGNATURE",
+          "defaultValue": "SIGNATURE ON FILE"
+        },
+        {
+          "type": "text",
+          "name": "illness_date",
+          "aiHint": "Box 14 DATE OF CURRENT ILLNESS, INJURY, or PREGNANCY (LMP). Three small cells MM | DD | YY. Recent event — assume 20xx for 2-digit years. Return YYYY-MM-DD. Often blank; return null/undefined if not present.",
+          "title": "14. DATE OF CURRENT ILLNESS, INJURY, or PREGNANCY (LMP)",
+          "inputType": "date"
+        },
+        {
+          "type": "text",
+          "name": "illness_date_qualifier",
+          "title": "14. QUAL.",
+          "maxLength": 3,
+          "visibleIf": "{illness_date} notempty",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "other_date",
+          "aiHint": "Box 15 OTHER DATE. Three small cells MM | DD | YY. Recent event — assume 20xx for 2-digit years. Return YYYY-MM-DD. Often blank; return null/undefined if not present.",
+          "title": "15. OTHER DATE",
+          "inputType": "date"
+        },
+        {
+          "type": "text",
+          "name": "other_date_qualifier",
+          "title": "15. QUAL.",
+          "maxLength": 3,
+          "visibleIf": "{other_date} notempty",
+          "isRequired": true,
+          "startWithNewLine": false
+        },
+        {
+          "type": "text",
+          "name": "unable_to_work_from",
+          "aiHint": "Box 16 left date — patient unable to work FROM. Three small cells MM | DD | YY. Recent — assume 20xx. Return YYYY-MM-DD. Often blank.",
+          "title": "16. DATES PATIENT UNABLE TO WORK IN CURRENT OCCUPATION \u2014 FROM",
+          "inputType": "date"
+        },
+        {
+          "type": "text",
+          "name": "unable_to_work_to",
+          "aiHint": "Box 16 right date — patient unable to work TO. Three small cells MM | DD | YY. Recent — assume 20xx. Return YYYY-MM-DD. Often blank.",
+          "title": "16. DATES PATIENT UNABLE TO WORK IN CURRENT OCCUPATION \u2014 TO",
+          "inputType": "date",
+          "startWithNewLine": false
+        },
+        {
+          "type": "text",
+          "name": "hospitalization_from",
+          "aiHint": "Box 18 hospitalization FROM date. Three small cells MM | DD | YY. Recent — assume 20xx. Return YYYY-MM-DD. Often blank.",
+          "title": "18. HOSPITALIZATION DATES RELATED TO CURRENT SERVICES \u2014 FROM",
+          "inputType": "date"
+        },
+        {
+          "type": "text",
+          "name": "hospitalization_to",
+          "aiHint": "Box 18 hospitalization TO date. Three small cells MM | DD | YY. Recent — assume 20xx. Return YYYY-MM-DD. Often blank.",
+          "title": "18. HOSPITALIZATION DATES RELATED TO CURRENT SERVICES \u2014 TO",
+          "inputType": "date",
+          "startWithNewLine": false
+        }
+      ]
+    },
+    {
+      "name": "box17_referring_provider",
+      "title": "17. Name of Referring Provider or Other Source",
+      "elements": [
+        {
+          "type": "text",
+          "name": "referring_provider_name",
+          "title": "17. NAME OF REFERRING PROVIDER OR OTHER SOURCE"
+        },
+        {
+          "type": "text",
+          "name": "referring_provider_qualifier",
+          "title": "17. Qualifier",
+          "maxLength": 2,
+          "visibleIf": "{referring_provider_name} notempty"
+        },
+        {
+          "type": "text",
+          "name": "referring_npi",
+          "aiHint": "Box 17b NPI of the referring provider. 10-digit National Provider Identifier with no separators. Visible only if a referring provider name is present.",
+          "title": "17b. NPI",
+          "maskType": "pattern",
+          "maskSettings": {
+            "pattern": "9999999999"
+          },
+          "visibleIf": "{referring_provider_name} notempty"
+        }
+      ]
+    },
+    {
+      "name": "box19_box20_box22_box23",
+      "title": "19. Additional Claim Info \u00b7 20. Outside Lab \u00b7 22. Resubmission \u00b7 23. Prior Auth",
+      "elements": [
+        {
+          "type": "text",
+          "name": "additional_claim_info",
+          "title": "19. ADDITIONAL CLAIM INFORMATION (Designated by NUCC)"
+        },
+        {
+          "type": "radiogroup",
+          "name": "outside_lab",
+          "aiHint": "Box 20 OUTSIDE LAB? Two small checkboxes YES and NO. X is to the LEFT of the chosen one. Return 'Y' or 'N'. Often blank when no outside lab was used.",
+          "title": "20. OUTSIDE LAB?",
+          "choices": [
+            {
+              "value": "Y",
+              "text": "Yes"
+            },
+            {
+              "value": "N",
+              "text": "No"
+            }
+          ],
+          "colCount": 0
+        },
+        {
+          "type": "text",
+          "name": "charges",
+          "aiHint": "Box 20 OUTSIDE LAB $ CHARGES. Dollars and cents are in two adjacent cells on the paper form — reassemble as a single decimal (e.g., 75.00). Visible only if outside_lab = 'Y'.",
+          "title": "20. $ CHARGES",
+          "maskType": "currency",
+          "maskSettings": {
+            "decimalSeparator": ".",
+            "thousandsSeparator": ",",
+            "precision": 2,
+            "min": 0
+          },
+          "visibleIf": "{outside_lab} = 'Y'"
+        },
+        {
+          "type": "text",
+          "name": "resubmission_code",
+          "title": "22. RESUBMISSION CODE"
+        },
+        {
+          "type": "text",
+          "name": "original_ref_no",
+          "title": "22. ORIGINAL REF. NO.",
+          "startWithNewLine": false
+        },
+        {
+          "type": "text",
+          "name": "prior_auth_number",
+          "title": "23. PRIOR AUTHORIZATION NUMBER"
+        }
+      ]
+    },
+    {
+      "name": "box21_diagnoses",
+      "title": "21. Diagnosis or Nature of Illness or Injury",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "icd_indicator",
+          "aiHint": "Box 21 ICD Ind. — a tiny box that contains either '0' (ICD-10-CM) or '9' (ICD-9-CM). On modern claims this is almost always 0. Return '0' or '9' as a string.",
+          "title": "21. ICD Ind.",
+          "choices": [
+            {
+              "value": "0",
+              "text": "0 \u2014 ICD-10-CM"
+            },
+            {
+              "value": "9",
+              "text": "9 \u2014 ICD-9-CM (legacy claims only)"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true,
+          "defaultValue": "0"
+        },
+        {
+          "type": "matrixdynamic",
+          "name": "diagnoses",
+          "aiHint": "Box 21 lists ICD codes in a 12-cell grid arranged 3 rows by 4 columns, labeled A B C D (top row), E F G H (middle row), I J K L (bottom row). Each cell may contain one ICD-10-CM code. Return one row per NON-EMPTY cell: set 'pointer' to the cell letter (A-L) and 'code' to the code printed in that cell. Skip empty cells. ICD-10-CM format: one letter (A-T, V-Z) + 2 alphanumeric, optional dot and 1-4 alphanumeric (e.g., I10, E78.5, Z00.00, S52.501A). Leave 'description' blank — it is not printed on the paper form.",
+          "title": "21. DIAGNOSIS OR NATURE OF ILLNESS OR INJURY (Relate A-L to service line below 24E)",
+          "description": "Up to 12 codes (pointers A through L on the paper form).",
+          "minRowCount": 1,
+          "maxRowCount": 12,
+          "rowCount": 1,
+          "addRowText": "Add diagnosis",
+          "removeRowText": "Remove",
+          "columns": [
+            {
+              "name": "pointer",
+              "title": "Letter (A\u2013L)",
+              "cellType": "dropdown",
+              "choices": [
+                "A",
+                "B",
+                "C",
+                "D",
+                "E",
+                "F",
+                "G",
+                "H",
+                "I",
+                "J",
+                "K",
+                "L"
+              ],
+              "isRequired": true,
+              "width": "90px"
+            },
+            {
+              "name": "code",
+              "title": "ICD-10-CM Code",
+              "cellType": "text",
+              "isRequired": true,
+              "placeholder": "E78.5",
+              "validators": [
+                {
+                  "type": "regex",
+                  "regex": "^[A-TV-Z][0-9][0-9A-Z](\\.[0-9A-Z]{1,4})?$",
+                  "text": "Use ICD-10-CM format (e.g., I10, E78.5, Z00.00, S52.501A)."
+                }
+              ],
+              "width": "180px"
+            },
+            {
+              "name": "description",
+              "title": "Description",
+              "cellType": "text"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "box24_services",
+      "title": "24. A-J. Service Lines",
+      "description": "Up to 6 service lines per claim. Add more rows as needed.",
+      "elements": [
+        {
+          "type": "matrixdynamic",
+          "name": "service_lines",
+          "aiHint": "Box 24 is a table with up to 6 service-line rows. Each row spans the page horizontally. Column order: A) DATE(S) OF SERVICE — From and To, each in 3 small cells MM | DD | YY (recent dates — assume 20xx for 2-digit years); B) Place of Service (2-digit code, e.g., 11 for Office); C) EMG (small checkbox to the LEFT of the column header — usually empty); D) CPT/HCPCS code (5 chars) followed by up to 4 two-char modifiers in separate small cells; E) Diagnosis Pointer (letters A-L from Box 21, concatenated with no separators, e.g., 'A' or 'ABC'); F) $ CHARGES (dollars and cents in two adjacent cells — reassemble as decimal); G) Days or Units (small number, usually 1); H) EPSDT Family Plan (small checkbox, usually empty); J) Rendering Provider NPI (10 digits, in the lower half of the row, no separators). Return one matrixdynamic row per filled service line. If 'dos_to' is blank but 'dos_from' is filled, copy 'dos_from' into 'dos_to'.",
+          "title": "24. A. DATE(S) OF SERVICE \u00b7 B. PLACE OF SERVICE \u00b7 C. EMG \u00b7 D. PROCEDURES, SERVICES, OR SUPPLIES \u00b7 E. DIAGNOSIS POINTER \u00b7 F. $ CHARGES \u00b7 G. DAYS OR UNITS \u00b7 H. EPSDT Family Plan \u00b7 I. ID. QUAL. \u00b7 J. RENDERING PROVIDER ID. #",
+          "minRowCount": 1,
+          "maxRowCount": 6,
+          "rowCount": 1,
+          "addRowText": "Add service line",
+          "removeRowText": "Remove",
+          "columns": [
+            {
+              "name": "dos_from",
+              "title": "24A. DATE(S) OF SERVICE From",
+              "cellType": "text",
+              "inputType": "date",
+              "isRequired": true,
+              "width": "130px"
+            },
+            {
+              "name": "dos_to",
+              "title": "24A. DATE(S) OF SERVICE To",
+              "cellType": "text",
+              "inputType": "date",
+              "isRequired": true,
+              "width": "130px"
+            },
+            {
+              "name": "place_of_service",
+              "title": "24B. PLACE OF SERVICE",
+              "cellType": "dropdown",
+              "choices": [
+                {
+                  "value": "11",
+                  "text": "11 \u2014 Office"
+                },
+                {
+                  "value": "12",
+                  "text": "12 \u2014 Home"
+                },
+                {
+                  "value": "21",
+                  "text": "21 \u2014 Inpatient Hospital"
+                },
+                {
+                  "value": "22",
+                  "text": "22 \u2014 Outpatient Hospital"
+                },
+                {
+                  "value": "23",
+                  "text": "23 \u2014 Emergency Room"
+                },
+                {
+                  "value": "24",
+                  "text": "24 \u2014 Ambulatory Surgical Center"
+                },
+                {
+                  "value": "31",
+                  "text": "31 \u2014 Skilled Nursing Facility"
+                },
+                {
+                  "value": "32",
+                  "text": "32 \u2014 Nursing Facility"
+                },
+                {
+                  "value": "81",
+                  "text": "81 \u2014 Independent Laboratory"
+                }
+              ],
+              "isRequired": true,
+              "width": "120px"
+            },
+            {
+              "name": "emg",
+              "title": "24C. EMG",
+              "cellType": "boolean",
+              "renderAs": "checkbox",
+              "width": "70px"
+            },
+            {
+              "name": "cpt_hcpcs",
+              "title": "24D. CPT/HCPCS",
+              "cellType": "text",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "#####"
+              },
+              "placeholder": "99214",
+              "isRequired": true,
+              "width": "110px"
+            },
+            {
+              "name": "modifier_1",
+              "title": "24D. MODIFIER (1)",
+              "cellType": "text",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "##"
+              },
+              "width": "70px"
+            },
+            {
+              "name": "modifier_2",
+              "title": "24D. MODIFIER (2)",
+              "cellType": "text",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "##"
+              },
+              "width": "70px"
+            },
+            {
+              "name": "modifier_3",
+              "title": "24D. MODIFIER (3)",
+              "cellType": "text",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "##"
+              },
+              "width": "70px"
+            },
+            {
+              "name": "modifier_4",
+              "title": "24D. MODIFIER (4)",
+              "cellType": "text",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "##"
+              },
+              "width": "70px"
+            },
+            {
+              "name": "diagnosis_pointer",
+              "title": "24E. DIAGNOSIS POINTER",
+              "cellType": "text",
+              "isRequired": true,
+              "maxLength": 4,
+              "description": "Letters A-L. Example: 'A' or 'ABC'.",
+              "validators": [
+                {
+                  "type": "regex",
+                  "regex": "^[A-La-l]{1,4}$",
+                  "text": "Use letters A-L only, up to 4."
+                }
+              ],
+              "width": "80px"
+            },
+            {
+              "name": "charges",
+              "title": "24F. $ CHARGES",
+              "cellType": "text",
+              "maskType": "currency",
+              "maskSettings": {
+                "decimalSeparator": ".",
+                "thousandsSeparator": ",",
+                "precision": 2,
+                "min": 0
+              },
+              "isRequired": true,
+              "width": "110px"
+            },
+            {
+              "name": "units",
+              "title": "24G. DAYS OR UNITS",
+              "cellType": "text",
+              "maskType": "numeric",
+              "maskSettings": {
+                "precision": 0,
+                "min": 1
+              },
+              "isRequired": true,
+              "defaultValue": "1",
+              "width": "90px"
+            },
+            {
+              "name": "epsdt",
+              "title": "24H. EPSDT Family Plan",
+              "cellType": "boolean",
+              "renderAs": "checkbox",
+              "width": "70px"
+            },
+            {
+              "name": "rendering_provider_npi",
+              "title": "24J. RENDERING PROVIDER ID. # (NPI)",
+              "cellType": "text",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "9999999999"
+              },
+              "isRequired": true,
+              "width": "140px"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "box25_to_box30",
+      "title": "25-30. Federal Tax I.D., Patient Account, Accept Assignment, Charges",
+      "elements": [
+        {
+          "type": "radiogroup",
+          "name": "tax_id_type",
+          "aiHint": "Box 25 right side. Two small checkboxes labeled SSN and EIN. X is to the LEFT of the chosen one. EIN is far more common for medical practices. Return 'SSN' or 'EIN' (uppercase).",
+          "title": "25. FEDERAL TAX I.D. NUMBER \u2014 TYPE (SSN / EIN)",
+          "choices": [
+            {
+              "value": "SSN",
+              "text": "SSN"
+            },
+            {
+              "value": "EIN",
+              "text": "EIN"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true,
+          "defaultValue": "EIN"
+        },
+        {
+          "type": "text",
+          "name": "federal_tax_id_ein",
+          "aiHint": "Box 25 EIN. Format: 99-9999999 (two digits, hyphen, seven digits). Capture exactly as printed including the hyphen. Visible only if tax_id_type = 'EIN'.",
+          "title": "25. FEDERAL TAX I.D. NUMBER (EIN)",
+          "maskType": "pattern",
+          "maskSettings": {
+            "pattern": "99-9999999"
+          },
+          "placeholder": "12-3456789",
+          "visibleIf": "{tax_id_type} = 'EIN'",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "federal_tax_id_ssn",
+          "aiHint": "Box 25 SSN. Format: 999-99-9999 (three digits, hyphen, two digits, hyphen, four digits). Visible only if tax_id_type = 'SSN'.",
+          "title": "25. FEDERAL TAX I.D. NUMBER (SSN)",
+          "maskType": "pattern",
+          "maskSettings": {
+            "pattern": "999-99-9999"
+          },
+          "placeholder": "123-45-6789",
+          "visibleIf": "{tax_id_type} = 'SSN'",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "patient_account_no",
+          "title": "26. PATIENT'S ACCOUNT NO."
+        },
+        {
+          "type": "radiogroup",
+          "name": "accept_assignment",
+          "aiHint": "Box 27 ACCEPT ASSIGNMENT? Two small checkboxes YES and NO. X is to the LEFT of the chosen one. Return 'Y' or 'N'. Most claims have YES.",
+          "title": "27. ACCEPT ASSIGNMENT? (For govt. claims, see back)",
+          "choices": [
+            {
+              "value": "Y",
+              "text": "Yes"
+            },
+            {
+              "value": "N",
+              "text": "No"
+            }
+          ],
+          "colCount": 0,
+          "isRequired": true,
+          "defaultValue": "Y"
+        },
+        {
+          "type": "text",
+          "name": "total_charge",
+          "aiHint": "Box 28 TOTAL CHARGE. On the paper form, dollars and cents are in two adjacent cells (e.g., '248' and '00'). Reassemble as a single decimal number (e.g., 248.00). Should equal the sum of all Box 24F service-line charges.",
+          "title": "28. TOTAL CHARGE",
+          "maskType": "currency",
+          "maskSettings": {
+            "decimalSeparator": ".",
+            "thousandsSeparator": ",",
+            "precision": 2,
+            "min": 0
+          },
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "amount_paid",
+          "aiHint": "Box 29 AMOUNT PAID. Dollars and cents in two adjacent cells. Reassemble as decimal (e.g., 25.00). May be 0.00 if no payment was collected at time of service.",
+          "title": "29. AMOUNT PAID",
+          "maskType": "currency",
+          "maskSettings": {
+            "decimalSeparator": ".",
+            "thousandsSeparator": ",",
+            "precision": 2,
+            "min": 0
+          }
+        },
+        {
+          "type": "text",
+          "name": "rsvd_or_balance_due",
+          "title": "30. Rsvd for NUCC Use"
+        }
+      ]
+    },
+    {
+      "name": "box31_to_box33_provider",
+      "title": "31-33. Provider Signature, Service Facility, Billing Provider",
+      "elements": [
+        {
+          "type": "text",
+          "name": "physician_signature",
+          "title": "31. SIGNATURE OF PHYSICIAN OR SUPPLIER INCLUDING DEGREES OR CREDENTIALS",
+          "defaultValue": "SIGNATURE ON FILE",
+          "isRequired": true
+        },
+        {
+          "type": "text",
+          "name": "physician_signature_date",
+          "aiHint": "Box 31 DATE next to physician signature. Usually MM/DD/YYYY. For 2-digit years, this is a recent signing date — assume 20xx. Return YYYY-MM-DD.",
+          "title": "31. DATE",
+          "inputType": "date",
+          "isRequired": true,
+          "startWithNewLine": false
+        },
+        {
+          "type": "panel",
+          "name": "box32_panel",
+          "title": "32. SERVICE FACILITY LOCATION INFORMATION",
+          "elements": [
+            {
+              "type": "text",
+              "name": "facility_name",
+              "title": "SERVICE FACILITY LOCATION INFORMATION \u2014 Name"
+            },
+            {
+              "type": "text",
+              "name": "facility_street",
+              "title": "SERVICE FACILITY LOCATION INFORMATION \u2014 Address"
+            },
+            {
+              "type": "text",
+              "name": "facility_city",
+              "title": "SERVICE FACILITY LOCATION INFORMATION \u2014 City"
+            },
+            {
+              "type": "dropdown",
+              "name": "facility_state",
+              "title": "SERVICE FACILITY LOCATION INFORMATION \u2014 State",
+              "choices": [
+                "AL",
+                "AK",
+                "AZ",
+                "AR",
+                "CA",
+                "CO",
+                "CT",
+                "DE",
+                "DC",
+                "FL",
+                "GA",
+                "HI",
+                "ID",
+                "IL",
+                "IN",
+                "IA",
+                "KS",
+                "KY",
+                "LA",
+                "ME",
+                "MD",
+                "MA",
+                "MI",
+                "MN",
+                "MS",
+                "MO",
+                "MT",
+                "NE",
+                "NV",
+                "NH",
+                "NJ",
+                "NM",
+                "NY",
+                "NC",
+                "ND",
+                "OH",
+                "OK",
+                "OR",
+                "PA",
+                "RI",
+                "SC",
+                "SD",
+                "TN",
+                "TX",
+                "UT",
+                "VT",
+                "VA",
+                "WA",
+                "WV",
+                "WI",
+                "WY",
+                "PR",
+                "VI",
+                "AS",
+                "GU",
+                "MP"
+              ],
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "facility_zip",
+              "title": "SERVICE FACILITY LOCATION INFORMATION \u2014 ZIP",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "99999"
+              },
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "facility_npi",
+              "aiHint": "Box 32a NPI of the service facility. 10-digit National Provider Identifier with no separators.",
+              "title": "32a. NPI",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "9999999999"
+              }
+            },
+            {
+              "type": "text",
+              "name": "facility_other_id",
+              "title": "32b. Other ID #",
+              "startWithNewLine": false
+            }
+          ]
+        },
+        {
+          "type": "panel",
+          "name": "box33_panel",
+          "title": "33. BILLING PROVIDER INFO & PH #",
+          "elements": [
+            {
+              "type": "text",
+              "name": "billing_name",
+              "title": "BILLING PROVIDER INFO & PH # \u2014 Name",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "billing_phone",
+              "title": "BILLING PROVIDER PH #",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "(999) 999-9999"
+              },
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "billing_street",
+              "title": "BILLING PROVIDER INFO \u2014 Address",
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "billing_city",
+              "title": "BILLING PROVIDER INFO \u2014 City",
+              "isRequired": true
+            },
+            {
+              "type": "dropdown",
+              "name": "billing_state",
+              "title": "BILLING PROVIDER INFO \u2014 State",
+              "choices": [
+                "AL",
+                "AK",
+                "AZ",
+                "AR",
+                "CA",
+                "CO",
+                "CT",
+                "DE",
+                "DC",
+                "FL",
+                "GA",
+                "HI",
+                "ID",
+                "IL",
+                "IN",
+                "IA",
+                "KS",
+                "KY",
+                "LA",
+                "ME",
+                "MD",
+                "MA",
+                "MI",
+                "MN",
+                "MS",
+                "MO",
+                "MT",
+                "NE",
+                "NV",
+                "NH",
+                "NJ",
+                "NM",
+                "NY",
+                "NC",
+                "ND",
+                "OH",
+                "OK",
+                "OR",
+                "PA",
+                "RI",
+                "SC",
+                "SD",
+                "TN",
+                "TX",
+                "UT",
+                "VT",
+                "VA",
+                "WA",
+                "WV",
+                "WI",
+                "WY",
+                "PR",
+                "VI",
+                "AS",
+                "GU",
+                "MP"
+              ],
+              "isRequired": true,
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "billing_zip",
+              "title": "BILLING PROVIDER INFO \u2014 ZIP",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "99999"
+              },
+              "isRequired": true,
+              "startWithNewLine": false
+            },
+            {
+              "type": "text",
+              "name": "billing_npi",
+              "aiHint": "Box 33a NPI of the billing provider. 10-digit National Provider Identifier with no separators. Usually filled.",
+              "title": "33a. NPI",
+              "maskType": "pattern",
+              "maskSettings": {
+                "pattern": "9999999999"
+              },
+              "isRequired": true
+            },
+            {
+              "type": "text",
+              "name": "billing_other_id",
+              "title": "33b. Other ID #",
+              "startWithNewLine": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

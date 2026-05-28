@@ -15,7 +15,7 @@ export interface ProvidersResponse {
 export interface ProcessResult {
   data: Record<string, unknown>;
   uniqueId?: string;
-  confidence: Record<string, number>;
+  confidence: Record<string, number | null>;
   overallConfidence: number;
   lowConfidenceFields: string[];
   processingTime: number;
