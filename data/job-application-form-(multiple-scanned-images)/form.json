@@ -43,7 +43,8 @@
               "name": "dateOfBirth",
               "title": "Date of Birth",
               "isRequired": true,
-              "inputType": "date"
+              "inputType": "date",
+              "aiHint": "The date is handwritten in long form (e.g. 'March 14, 1992'). Convert it to ISO format YYYY-MM-DD (e.g. 1992-03-14) and return that."
             },
             {
               "type": "text",
@@ -77,6 +78,7 @@
               "name": "availability",
               "title": "Availability",
               "isRequired": true,
+              "aiHint": "The options (Full-time / Part-time / Other) are printed inline on a single line, with no checkboxes. The applicant marks their choice by underlining, circling, or striking a line through one of the words. Return the marked option. If 'Other' is marked, also capture any handwritten text written beside it.",
               "choices": [
                 "Full-time",
                 "Part-time"
@@ -88,6 +90,7 @@
               "name": "willingToRelocate",
               "title": "Willingness to Relocate",
               "isRequired": true,
+              "aiHint": "The two words 'Yes / No' are printed inline on one line, with no checkboxes. The applicant indicates the answer by underlining, circling, or drawing a line through the chosen word. A mark under or around 'Yes' means Yes; under or around 'No' means No. Return the marked option.",
               "choices": [
                 "Yes",
                 "No"
@@ -98,6 +101,7 @@
               "name": "authorizedToWork",
               "title": "Authorized to Work in Country",
               "isRequired": true,
+              "aiHint": "The two words 'Yes / No' are printed inline on one line, with no checkboxes. The applicant indicates the answer by underlining, circling, or drawing a line through the chosen word. A mark under or around 'Yes' means Yes; under or around 'No' means No. Return the marked option.",
               "choices": [
                 "Yes",
                 "No"
@@ -108,6 +112,7 @@
               "name": "previousEmployment",
               "title": "Previous Employment with Company",
               "isRequired": true,
+              "aiHint": "The two words 'Yes / No' are printed inline on one line, with no checkboxes. The applicant indicates the answer by underlining, circling, or drawing a line through the chosen word. A mark under or around 'Yes' means Yes; under or around 'No' means No. Return the marked option.",
               "choices": [
                 "Yes",
                 "No"
@@ -199,7 +204,8 @@
             {
               "type": "text",
               "name": "reasonForLeaving",
-              "title": "Reason for Leaving"
+              "title": "Reason for Leaving",
+              "aiHint": "Transcribe the applicant's handwritten reason for leaving verbatim. Return it even when the 'Dates of Employment' indicate the applicant is still employed (e.g. ends with 'Present'); do not infer the field is empty or not applicable based on employment status. The handwritten text on this line is the value to return."
             }
           ]
         },
@@ -300,7 +306,8 @@
               "type": "text",
               "name": "dateOfSubmission",
               "title": "Date",
-              "inputType": "date"
+              "inputType": "date",
+              "aiHint": "The date is handwritten in long form (e.g. 'April 22, 2026'). Convert it to ISO format YYYY-MM-DD (e.g. 2026-04-22) and return that."
             }
           ]
         }

@@ -65,67 +65,32 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const imageBuffers: Buffer[] = [];
+    const pages: Buffer[] = [];
     for (const file of imageFiles) {
       const arrayBuffer = await file.arrayBuffer();
-      imageBuffers.push(Buffer.from(arrayBuffer));
+      pages.push(Buffer.from(arrayBuffer));
     }
 
-    let allData: Record<string, unknown> = {};
-    let allConfidence: Record<string, number | null> = {};
-    let uniqueId: string | undefined;
-    let extractionError: string | undefined;
+    // All uploaded images are pages of one form, so a single extractFromPages
+    // call extracts the whole form in one model request.
+    const result = await extractor.extractFromPages({
+      pages,
+      formDefinition: surveyJson,
+    });
 
-    for (const buffer of imageBuffers) {
-      try {
-        const result = await extractor.extractFromImage({
-          image: buffer,
-          formDefinition: surveyJson,
-        });
-
-        // result.confidence is FieldConfidence[] with { fieldName, confidence, flagged }.
-        // confidence is `number | null`; null means "no signal" (e.g. the model
-        // confidently returned the field as empty without a numeric score).
-        const confidenceMap: Record<string, number | null> = {};
-        for (const fc of result.confidence) {
-          confidenceMap[fc.fieldName] = fc.confidence;
-        }
-
-        for (const [key, value] of Object.entries(result.data || {})) {
-          const newConf = confidenceMap[key] ?? null;
-          const existingConf = allConfidence[key] ?? null;
-          // A numeric confidence always wins over null; among numerics, higher wins.
-          // null is only kept when nothing better has been seen for this field.
-          const newScore = newConf ?? -1;
-          const existingScore = key in allConfidence ? existingConf ?? -1 : -Infinity;
-          if (newScore >= existingScore) {
-            allData[key] = value;
-            allConfidence[key] = newConf;
-          }
-        }
-
-        if (result.uniqueId && !uniqueId) {
-          uniqueId = result.uniqueId;
-        }
-      } catch (err) {
-        extractionError = err instanceof Error ? err.message : "Extraction failed";
-        break;
-      }
+    const data = result.data;
+    const confidence: Record<string, number | null> = {};
+    for (const fc of result.confidence) {
+      confidence[fc.fieldName] = fc.confidence;
     }
-
-    if (extractionError) {
-      return NextResponse.json(
-        { error: extractionError, partialData: allData },
-        { status: 500 }
-      );
-    }
+    const uniqueId = result.uniqueId ?? undefined;
 
     const processingTime = Date.now() - startTime;
 
     // Only fields with a numeric confidence count toward the metric. Fields
     // scored null (correctly-empty / no signal) are excluded so they don't
     // drag the average down or get flagged as low-confidence.
-    const scoredValues = Object.values(allConfidence).filter(
+    const scoredValues = Object.values(confidence).filter(
       (c): c is number => c !== null
     );
     const overallConfidence =
@@ -133,14 +98,14 @@ export async function POST(request: NextRequest) {
         ? scoredValues.reduce((a, b) => a + b, 0) / scoredValues.length
         : 0;
 
-    const lowConfidenceFields = Object.entries(allConfidence)
+    const lowConfidenceFields = Object.entries(confidence)
       .filter(([, score]) => score !== null && score < 0.75)
       .map(([field]) => field);
 
     return NextResponse.json({
-      data: allData,
+      data,
       uniqueId,
-      confidence: allConfidence,
+      confidence,
       overallConfidence,
       lowConfidenceFields,
       processingTime,
