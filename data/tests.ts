@@ -11,7 +11,8 @@ const DATA_DIR = path.join(process.cwd(), "data");
 function dirNameToTitle(dirName: string): string {
   return dirName
     .replace(/[-_]/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+    .replace("Pdf", "PDF");
 }
 
 export function getTestDatasets(): TestDataset[] {

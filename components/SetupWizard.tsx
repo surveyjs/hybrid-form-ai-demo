@@ -63,9 +63,9 @@ export default function SetupWizard({
               name: "provider",
               title: "Choose LLM Provider",
               description:
-                "Select the AI provider to use for form extraction." +
+                "Select the AI provider to use for form extraction.\n" +
                 (ollamaWarning
-                  ? ` ⚠️ ${ollamaWarning}`
+                  ? `⚠️ ${ollamaWarning}`
                   : ""),
               isRequired: true,
               choices: providerChoices,
