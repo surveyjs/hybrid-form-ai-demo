@@ -43,8 +43,7 @@
               "name": "dateOfBirth",
               "title": "Date of Birth",
               "isRequired": true,
-              "inputType": "date",
-              "aiHint": "The date is handwritten in long form (e.g. 'March 14, 1992'). Convert it to ISO format YYYY-MM-DD (e.g. 1992-03-14) and return that."
+              "inputType": "date"
             },
             {
               "type": "text",
@@ -306,8 +305,7 @@
               "type": "text",
               "name": "dateOfSubmission",
               "title": "Date",
-              "inputType": "date",
-              "aiHint": "The date is handwritten in long form (e.g. 'April 22, 2026'). Convert it to ISO format YYYY-MM-DD (e.g. 2026-04-22) and return that."
+              "inputType": "date"
             }
           ]
         }
